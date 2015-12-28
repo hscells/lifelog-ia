@@ -1,1 +1,1 @@
-web    java $JAVA_OPTS -Ddw.server.connector.port=$PORT -jar build/libs/LifelogIa-1.0-SNAPSHOT.jar server configuration.yml
+web    java $JAVA_OPTS -Ddw.server.applicationConnectors.port=$PORT -jar build/libs/LifelogIa-1.0-SNAPSHOT.jar server configuration.yml

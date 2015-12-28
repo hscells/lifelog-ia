@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <title>Image Annotator</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="/static/custom.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Lifelog Image Annotator</h1>
+    </div>
+
+    <p class="lead">Help us understand describe with as much detail as possible the concepts in an image.</p>
+
+    <p>
+        <strong>Instructions:</strong>
+    <ol>
+        <li>You will be presented with a number of images.</li>
+        <li>We would like you to provide us with with a detailed description of as many concepts as possible of the image.</li>
+        <li>You can return to this page at anytime, just enter your name again and all your saved descriptions will be shown.</li>
+    </ol>
+    </p>
+
+    <div id="lifelog-app">
+
+        <div id="lifelog-person" class="form-group">
+            <label for="input-name">Enter your name:</label>
+            <div class="input-group">
+                <input id="lifelog-name" focus="true" type="text" class="form-control" id="input-name" title="Name">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary save">Okay</button>
+                </span>
+            </div>
+        </div>
+
+        <section id="main">
+            <div id="lifelog-image-list"></div>
+        </section>
+
+    </div>
+</div> <!-- /container -->
+
+<footer class="footer">
+    <div class="container">
+        <p class="text-muted">Lifelog Image Annotator</p>
+    </div>
+</footer>
+
+<script src="static/jquery-1.11.3.min.js" type="text/javascript"></script>
+<script src="static/underscore-min.js" type="text/javascript"></script>
+<script src="static/backbone-min.js" type="text/javascript"></script>
+<script src="static/app.js" type="text/javascript"></script>
+
+<script type="text/template" id="item-template">
+    <div>
+        <h3><%- name %></h3>
+
+        <div class="case">
+
+            <blockquote><img src="data:image/jpg;base64,<%- data %>" width="80%" /></blockquote>
+
+            <p>Provide a detailed description of as many things as possible in the above scene.</p>
+
+            <fieldset class="form-group">
+                <div class="col-md-6">
+                    <textarea class="form-control annotation" placeholder="Enter description here." title="Description"></textarea>
+                    <button class="btn btn-default save">Save</button>
+                </div>
+            </fieldset>
+
+        </div>
+        <hr>
+    </div>
+
+</script>
+<script type="text/template" id="stats-template">
+    <div></div>
+</script>
+</body>
+</html>

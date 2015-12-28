@@ -1,0 +1,54 @@
+group 'hscells'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = "hscells.LifelogIa.LifelogIaApplication"
+
+dependencies {
+
+    compile 'io.dropwizard:dropwizard-core:0.9.1'
+    compile 'io.dropwizard:dropwizard-views:0.9.1'
+    compile 'io.dropwizard:dropwizard-assets:0.9.1'
+    compile 'io.dropwizard:dropwizard-views-mustache:0.9.1'
+    compile 'io.dropwizard:dropwizard-jdbi:0.9.1'
+
+    compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+
+    compile ('org.imsglobal:basiclti-util:1.1.1'){
+        exclude group: 'com.fasterxml.jackson.core'
+        exclude group: 'org.codehaus.jackson'
+        exclude group: 'javax.servlet'
+    }
+    compile 'javax.mail:mail:1.4.7'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+// Create the executable jar and exclude some certificates
+jar {
+
+    manifest {
+        attributes "Implementation-Title": "Lifelog Image Annotation Interface"
+        attributes "Implementation-Version": version
+        attributes "Main-Class" : mainClassName
+    }
+
+    // remove the security files (from mail.jar / activation.jar) so that the jar will be executable.
+    doFirst {
+        from (configurations.runtime.resolve().collect { it.isDirectory() ? it : zipTree(it) }) {
+            exclude 'META-INF/MANIFEST.MF'
+            exclude 'META-INF/*.SF'
+            exclude 'META-INF/*.DSA'
+            exclude 'META-INF/*.RSA'
+        }
+    }
+}

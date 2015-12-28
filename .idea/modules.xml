@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LifelogIa.iml" filepath="$PROJECT_DIR$/LifelogIa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lifelog-ia.iml" filepath="$PROJECT_DIR$/lifelog-ia.iml" />
+    </modules>
+  </component>
+</project>

@@ -5,7 +5,6 @@ cluster/*
 build/*
 .gradle
 .idea
-.idea/*
 out
 *.iml
 *.ipr

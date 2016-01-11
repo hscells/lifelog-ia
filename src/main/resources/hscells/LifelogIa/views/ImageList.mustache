@@ -28,14 +28,29 @@
 
     <p class="lead">Help us understand what is in these images.</p>
 
-    <p>
+    <div>
         <strong>Instructions:</strong>
-    <ol>
-        <li>You will be presented with a number of images.</li>
-        <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
-        <li>We ask you to describe each image with as many details as possible. Write your description as if you were the person wearing the camera. For example, write "I am discussing some results with a colleague on a computer monitor in my office.". Include as many details as possible in your description. If an image doesn't have anything in it (for example it has a black blur), then write "N/A" (without quotes).</li>
-    </ol>
-    </p>
+        <ol>
+            <li>You will be presented with a number of images.</li>
+            <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
+            <li>We ask you to describe each image with as many details as possible. Write your description as if you were the person wearing the camera. For example, write "I am discussing some results with a colleague on a computer monitor in my office.". Include as many details as possible in your description. If an image doesn't have anything in it (for example it has a black blur), then write "N/A" (without quotes).</li>
+        </ol>
+    </div>
+
+    <div>
+        <strong title="(For Nerds)">Stats:</strong>
+        <ul>
+            <li>Number of images to annotate: {{unannotated}} <em>refresh page to update</em></li>
+            <li>
+                <em>Leaderboards (Top 10)</em>
+                <ol>
+                    {{#leaderboard}}
+                        <li>{{name}} - {{numAnnotated}}</li>
+                    {{/leaderboard}}
+                </ol>
+            </li>
+        </ul>
+    </div>
 
     <div id="lifelog-app">
 

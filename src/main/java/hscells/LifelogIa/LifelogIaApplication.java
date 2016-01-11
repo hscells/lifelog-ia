@@ -2,6 +2,7 @@ package hscells.LifelogIa;
 
 import hscells.LifelogIa.dao.ImageDao;
 import hscells.LifelogIa.dao.PeopleDao;
+import hscells.LifelogIa.dao.StatsDao;
 import hscells.LifelogIa.resources.ImageResource;
 import hscells.LifelogIa.resources.InterfaceResource;
 import hscells.LifelogIa.resources.PeopleResource;
@@ -26,11 +27,12 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
 
         final ImageDao imageDao = jdbi.onDemand(ImageDao.class);
         final PeopleDao peopleDao = jdbi.onDemand(PeopleDao.class);
+        final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
         environment.jersey().register(new ImageResource(imageDao, peopleDao));
         environment.jersey().register(new PeopleResource(peopleDao));
-        environment.jersey().register(new InterfaceResource());
-//        environment.jersey().register(new ImageResource());
+        environment.jersey().register(new InterfaceResource(statsDao));
+
     }
 
     public static void main(String[] args) throws Exception {

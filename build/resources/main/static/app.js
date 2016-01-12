@@ -79,7 +79,6 @@ $(document).ready(function() {
 
     var ImageView = Backbone.View.extend ({
 
-
         tagName:  "div",
 
         template: _.template($('#item-template').html()),
@@ -103,7 +102,7 @@ $(document).ready(function() {
         save: function() {
             var annotation = $(this.$(".annotation")[0]).val();
             this.model.persist(annotation);
-            $(this.el).hide();
+            this.remove();
         }
 
     })
@@ -116,11 +115,13 @@ $(document).ready(function() {
 
         initialize: function() {
 
-
             this.listenTo(Images, 'add', this.addOne);
 
             this.main = $('#main');
             this.main.hide();
+
+            this.annotatedEl = $("#session-annotated")[0];
+            this.numAnnotated = 0;
 
             Images.fetch();
         },
@@ -131,11 +132,18 @@ $(document).ready(function() {
 
         addOne: function(image) {
             var view = new ImageView({model: image});
+            this.listenToOnce(image, 'sync', this.refreshImages);
             this.$("#lifelog-image-list").append(view.render().el);
         },
 
-        addAll: function() {
-            Images.each(this.addOne, this);
+        refreshImages: function(image) {
+            this.numAnnotated += 1;
+            this.annotatedEl.innerHTML = "Awesome! you've annotated " + this.numAnnotated + " images in this session!";
+            Images.remove(image);
+            console.log(Images.length);
+            if (Images.length == 0) {
+                Images.fetch();
+            }
         },
 
     })

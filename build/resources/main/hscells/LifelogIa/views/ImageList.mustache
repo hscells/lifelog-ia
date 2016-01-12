@@ -1,111 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
 
 
-    <title>Image Annotator</title>
+        <title>Image Annotator</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="/static/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
-    <link href="/static/custom.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
+        <link href="/static/custom.css" rel="stylesheet">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-<div class="container">
+        <div class="container">
 
-    <div class="page-header">
-        <h1>Lifelog Image Annotator</h1>
-    </div>
-
-    <p class="lead">Help us understand what is in these images.</p>
-
-    <div>
-        <strong>Instructions:</strong>
-        <ol>
-            <li>You will be presented with a number of images.</li>
-            <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
-            <li>We ask you to describe each image with as many details as possible. Write your description as if you were the person wearing the camera. For example, write "I am discussing some results with a colleague on a computer monitor in my office.". Include as many details as possible in your description. If an image doesn't have anything in it (for example it has a black blur), then write "N/A" (without quotes).</li>
-        </ol>
-    </div>
-
-    <div>
-        <strong title="(For Nerds)">Stats:</strong>
-        <ul>
-            <li>Number of images to annotate: {{unannotated}} <em>refresh page to update</em></li>
-            <li>
-                <em>Leaderboards (Top 10)</em>
-                <ol>
-                    {{#leaderboard}}
-                        <li>{{name}} - {{numAnnotated}}</li>
-                    {{/leaderboard}}
-                </ol>
-            </li>
-        </ul>
-    </div>
-
-    <div id="lifelog-app">
-
-        <div id="lifelog-person" class="form-group">
-            <label for="input-name">Enter your name:</label>
-            <div class="input-group">
-                <input id="lifelog-name" focus="true" type="text" class="form-control" id="input-name" title="Name">
-                <span class="input-group-btn">
-                    <button class="btn btn-primary save">Okay</button>
-                </span>
+            <div class="page-header">
+                <h1>Lifelog Image Annotator</h1>
             </div>
-        </div>
 
-        <section id="main">
-            <div id="lifelog-image-list"></div>
-        </section>
+            <p class="lead">Help us understand what is in these images.</p>
 
-    </div>
-</div> <!-- /container -->
-
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Lifelog Image Annotator</p>
-    </div>
-</footer>
-
-<script src="static/jquery-1.11.3.min.js" type="text/javascript"></script>
-<script src="static/underscore-min.js" type="text/javascript"></script>
-<script src="static/backbone-min.js" type="text/javascript"></script>
-<script src="static/app.js" type="text/javascript"></script>
-
-<script type="text/template" id="item-template">
-    <div>
-        <h3><%- name %></h3>
-
-        <div class="case">
-
-            <blockquote><img src="data:image/jpg;base64,<%- data %>" width="80%" /></blockquote>
-
-            <p>Provide a description of the image; write it as if you were the person wearing the camera and give as many details as possible.</p>
-
-            <fieldset class="form-group">
+            <div class="row">
                 <div class="col-md-6">
-                    <textarea class="form-control annotation" placeholder="Enter description here." title="Description"></textarea>
-                    <button class="btn btn-default save">Save</button>
+                    <strong>Instructions:</strong>
+                    <ol>
+                        <li>You will be presented with a number of images.</li>
+                        <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
+                        <li>We ask you to describe each image with as many details as possible. Write your description as if you were the person wearing the camera. For example, write "I am discussing some results with a colleague on a computer monitor in my office.". Include as many details as possible in your description. If an image doesn't have anything in it (for example it has a black blur), then write "N/A" (without quotes).</li>
+                    </ol>
                 </div>
-            </fieldset>
+                <div class="col-md-6">
+                    <strong title="(For Nerds)">Stats:</strong>
+                    <ul>
+                        <li>Number of images to annotate: {{unannotated}}</li>
+                        <li>
+                            <em>Leaderboards (Top 10)</em>
+                            <ol>
+                                {{#leaderboard}}
+                                    <li>{{name}} - {{numAnnotated}}</li>
+                                {{/leaderboard}}
+                            </ol>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-        </div>
-        <hr>
-    </div>
+            <div id="lifelog-app">
 
-</script>
-<script type="text/template" id="stats-template">
-    <div></div>
-</script>
-</body>
+                <div id="lifelog-person" class="form-group">
+                    <label for="input-name">Enter your name:</label>
+                    <div class="input-group">
+                        <input id="lifelog-name" focus="true" type="text" class="form-control" id="input-name" title="Name">
+                        <span class="input-group-btn">
+                            <button class="btn btn-primary save">Okay</button>
+                        </span>
+                    </div>
+                </div>
+
+                <section id="main">
+                    <strong id="session-annotated"></strong>
+                    <div id="lifelog-image-list"></div>
+                </section>
+
+            </div>
+        </div> <!-- /container -->
+
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Lifelog Image Annotator</p>
+            </div>
+        </footer>
+
+        <script src="static/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="static/underscore-min.js" type="text/javascript"></script>
+        <script src="static/backbone-min.js" type="text/javascript"></script>
+        <script src="static/app.js" type="text/javascript"></script>
+
+        <script type="text/template" id="item-template">
+            <div>
+                <h3><%- name %></h3>
+
+                <div class="case">
+
+                    <blockquote><img src="data:image/jpg;base64,<%- data %>" width="80%" /></blockquote>
+
+                    <p>Provide a description of the image; write it as if you were the person wearing the camera and give as many details as possible.</p>
+
+                    <fieldset class="form-group">
+                        <div class="col-md-6">
+                            <textarea class="form-control annotation" placeholder="Enter description here." title="Description"></textarea>
+                            <button class="btn btn-default save">Save</button>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <hr>
+            </div>
+
+        </script>
+    </body>
 </html>

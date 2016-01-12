@@ -3,9 +3,12 @@ package hscells.LifelogIa.resources;
 import hscells.LifelogIa.dao.ImageDao;
 import hscells.LifelogIa.dao.PeopleDao;
 import hscells.LifelogIa.dto.ImageDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,6 +20,9 @@ import java.util.List;
  */
 @Path("/ws/images")
 public class ImageResource {
+
+    private static final Logger logger = LoggerFactory.getLogger(ImageResource.class);
+    private final int chunkSize = 10;
 
     private ImageDao imageDao;
     private PeopleDao peopleDao;
@@ -32,9 +38,19 @@ public class ImageResource {
     @Produces(MediaType.APPLICATION_JSON)
     public List<ImageDto> getImages() {
         int chunkId = imageDao.getChunk();
-        List<ImageDto> images = imageDao.getChunkOfImages(chunkId);
-//        List<ImageDto> images = new ArrayList<ImageDto>();
-//        images.add(new ImageDto(0, "offline-example-1",
+        long numAnnotated = 0;
+        List<ImageDto> images = new ArrayList<>();
+        do {
+            images = imageDao.getChunkOfImages(chunkId);
+            numAnnotated = images
+                    .stream()
+                    .filter(ImageDto::isAnnotated)
+                    .count();
+            if (numAnnotated == chunkSize) {
+                imageDao.setChunkAnnotated(images.get(0).getChunk_id());
+            }
+            logger.info("Number of annotated images in this chunk: " + numAnnotated);
+        } while (chunkSize == numAnnotated);
         return images;
     }
 
@@ -60,7 +76,6 @@ public class ImageResource {
         imageDao.addAnnotatedImage(imageId, imageDto.getAnnotator(), imageDto.getAnnotation());
         imageDao.setImageAnnotated(imageId);
         List<ImageDto> images = imageDao.getChunkOfImages(imageDto.getChunk_id());
-        int chunkSize = 10;
         int numAnnotated = 0;
         for (ImageDto image : images) {
             if (image.isAnnotated()) {

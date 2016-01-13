@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: Lifelog Image Annotation Interface
-Implementation-Version: 1.0-SNAPSHOT
-Main-Class: hscells.LifelogIa.LifelogIaApplication
-

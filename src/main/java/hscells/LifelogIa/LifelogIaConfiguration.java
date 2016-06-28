@@ -1,6 +1,7 @@
 package hscells.LifelogIa;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.common.cache.CacheBuilderSpec;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 
@@ -16,6 +17,11 @@ public class LifelogIaConfiguration extends Configuration {
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
 
+    @Valid
+    @NotNull
+    @JsonProperty("authenticationCachePolicy")
+    private CacheBuilderSpec authenticationCachePolicy;
+
     @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
         this.database = factory;
@@ -24,5 +30,10 @@ public class LifelogIaConfiguration extends Configuration {
     @JsonProperty("database")
     public DataSourceFactory getDataSourceFactory() {
         return database;
+    }
+
+    @JsonProperty("authenticationCachePolicy")
+    public CacheBuilderSpec getAuthenticationCachePolicy() {
+        return authenticationCachePolicy;
     }
 }

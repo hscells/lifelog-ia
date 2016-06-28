@@ -1,17 +1,29 @@
 package hscells.LifelogIa;
 
-import hscells.LifelogIa.dao.ImageDao;
-import hscells.LifelogIa.dao.PeopleDao;
+import hscells.LifelogIa.auth.PersonAuthenticator;
+import hscells.LifelogIa.auth.PersonAuthoriser;
+import hscells.LifelogIa.dao.PersonDao;
 import hscells.LifelogIa.dao.StatsDao;
-import hscells.LifelogIa.resources.ImageResource;
-import hscells.LifelogIa.resources.InterfaceResource;
-import hscells.LifelogIa.resources.PeopleResource;
+import hscells.LifelogIa.dao.TextualAnnotationDao;
+import hscells.LifelogIa.model.Person;
+import hscells.LifelogIa.model.TextualAnnotation;
+import hscells.LifelogIa.resources.PersonResource;
+import hscells.LifelogIa.resources.TextualAnnotationResource;
+import hscells.LifelogIa.resources.ViewResource;
+import hscells.LifelogIa.service.PersonService;
+import hscells.LifelogIa.service.TextualAnnotationService;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.CachingAuthenticator;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
+import io.dropwizard.auth.basic.BasicCredentials;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.skife.jdbi.v2.DBI;
 
 /**
@@ -25,13 +37,33 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
 
-        final ImageDao imageDao = jdbi.onDemand(ImageDao.class);
-        final PeopleDao peopleDao = jdbi.onDemand(PeopleDao.class);
+        final TextualAnnotationDao textualAnnotationDao = jdbi.onDemand(TextualAnnotationDao.class);
+        final PersonDao personDao = jdbi.onDemand(PersonDao.class);
         final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
-        environment.jersey().register(new ImageResource(imageDao, peopleDao));
-        environment.jersey().register(new PeopleResource(peopleDao));
-        environment.jersey().register(new InterfaceResource(statsDao));
+        final PersonService personService = new PersonService(personDao);
+        final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);
+
+
+        PersonAuthenticator personAuthenticator = new PersonAuthenticator(personService);
+
+        environment.jersey().register(new TextualAnnotationResource(textualAnnotationService));
+        environment.jersey().register(new PersonResource(personService));
+        environment.jersey().register(new ViewResource());
+
+        CachingAuthenticator<BasicCredentials, Person> cachingAuthenticator = new CachingAuthenticator<>(
+                environment.metrics(), personAuthenticator, configuration.getAuthenticationCachePolicy());
+
+        // authentication stuff
+        environment.jersey().register(new AuthDynamicFeature(
+                new BasicCredentialAuthFilter.Builder<Person>()
+                .setAuthenticator(cachingAuthenticator)
+                .setAuthorizer(new PersonAuthoriser())
+                .setRealm("LIFELOG-IMAGE-INTERFACE-HEROKU")
+                .buildAuthFilter()
+        ));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder<>(Person.class));
 
     }
 

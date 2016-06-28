@@ -1,14 +1,11 @@
 package hscells.LifelogIa.dao;
 
-import hscells.LifelogIa.dto.LeaderboardDto;
-import hscells.LifelogIa.dto.LeaderboardDtoMapper;
-import org.skife.jdbi.v2.sqlobject.Bind;
+import hscells.LifelogIa.mapper.LeaderboardMapper;
+import hscells.LifelogIa.model.Leaderboard;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Harry Scells on 17/12/2015.
@@ -19,7 +16,7 @@ public interface StatsDao {
     int getUnannotatedImageCount();
 
     @SqlQuery("SELECT people.name, count(annotated_images.id) as num_annotated FROM people, annotated_images WHERE people.id = annotated_images.person_id GROUP BY people.name ORDER BY num_annotated DESC limit 10")
-    @Mapper(LeaderboardDtoMapper.class)
-    List<LeaderboardDto> getLeaderboardScores();
+    @Mapper(LeaderboardMapper.class)
+    List<Leaderboard> getLeaderboardScores();
 
 }

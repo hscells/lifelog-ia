@@ -15,13 +15,17 @@ mainClassName = "hscells.LifelogIa.LifelogIaApplication"
 
 dependencies {
 
-    compile 'io.dropwizard:dropwizard-core:0.9.1'
-    compile 'io.dropwizard:dropwizard-views:0.9.1'
-    compile 'io.dropwizard:dropwizard-assets:0.9.1'
-    compile 'io.dropwizard:dropwizard-views-mustache:0.9.1'
-    compile 'io.dropwizard:dropwizard-jdbi:0.9.1'
+    compile 'io.dropwizard:dropwizard-core:0.9.2'
+    compile 'io.dropwizard:dropwizard-views:0.9.2'
+    compile 'io.dropwizard:dropwizard-assets:0.9.2'
+    compile 'io.dropwizard:dropwizard-views-mustache:0.9.2'
+    compile 'io.dropwizard:dropwizard-jdbi:0.9.2'
+    compile 'io.dropwizard:dropwizard-auth:0.9.2'
+
+    compile group: 'io.dropwizard.metrics', name: 'metrics-core', version: '3.1.2'
 
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
+    compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
 
     compile ('org.imsglobal:basiclti-util:1.1.1'){
         exclude group: 'com.fasterxml.jackson.core'

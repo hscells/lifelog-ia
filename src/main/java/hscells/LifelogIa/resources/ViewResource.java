@@ -1,5 +1,6 @@
 package hscells.LifelogIa.resources;
 
+import hscells.LifelogIa.views.AnnotationTagView;
 import hscells.LifelogIa.views.AnnotationTextualView;
 import hscells.LifelogIa.views.HomeView;
 import hscells.LifelogIa.views.RegisterView;
@@ -36,6 +37,14 @@ public class ViewResource {
     @Produces(MediaType.TEXT_HTML)
     public View annotationTextualView() {
         return new AnnotationTextualView();
+    }
+
+    @GET
+    @PermitAll
+    @Path("annotation/tag")
+    @Produces(MediaType.TEXT_HTML)
+    public View annotationTagView() {
+        return new AnnotationTagView();
     }
 
 }

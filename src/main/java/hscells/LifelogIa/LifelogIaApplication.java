@@ -1,19 +1,21 @@
 package hscells.LifelogIa;
 
+import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import hscells.LifelogIa.auth.PersonAuthenticator;
 import hscells.LifelogIa.auth.PersonAuthoriser;
 import hscells.LifelogIa.dao.PersonDao;
 import hscells.LifelogIa.dao.StatsDao;
+import hscells.LifelogIa.dao.TagAnnotationDao;
 import hscells.LifelogIa.dao.TextualAnnotationDao;
 import hscells.LifelogIa.model.Person;
-import hscells.LifelogIa.model.TextualAnnotation;
 import hscells.LifelogIa.resources.PersonResource;
+import hscells.LifelogIa.resources.TagAnnotationResource;
 import hscells.LifelogIa.resources.TextualAnnotationResource;
 import hscells.LifelogIa.resources.ViewResource;
 import hscells.LifelogIa.service.PersonService;
+import hscells.LifelogIa.service.TagAnnotationService;
 import hscells.LifelogIa.service.TextualAnnotationService;
 import io.dropwizard.Application;
-import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.CachingAuthenticator;
@@ -38,16 +40,18 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
 
         final TextualAnnotationDao textualAnnotationDao = jdbi.onDemand(TextualAnnotationDao.class);
+        final TagAnnotationDao tagAnnotationDao = jdbi.onDemand(TagAnnotationDao.class);
         final PersonDao personDao = jdbi.onDemand(PersonDao.class);
         final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
         final PersonService personService = new PersonService(personDao);
         final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);
-
+        final TagAnnotationService tagAnnotationService = new TagAnnotationService(tagAnnotationDao, jdbi);
 
         PersonAuthenticator personAuthenticator = new PersonAuthenticator(personService);
 
         environment.jersey().register(new TextualAnnotationResource(textualAnnotationService));
+        environment.jersey().register(new TagAnnotationResource(tagAnnotationService));
         environment.jersey().register(new PersonResource(personService));
         environment.jersey().register(new ViewResource());
 
@@ -78,8 +82,9 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
 
     @Override
     public void initialize(Bootstrap<LifelogIaConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
-        bootstrap.addBundle(new ViewBundle());
+//        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
+        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/static", "/static", "*"));
+        bootstrap.addBundle(new ViewBundle<>());
     }
 
 }

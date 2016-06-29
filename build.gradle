@@ -26,6 +26,7 @@ dependencies {
 
     compile 'postgresql:postgresql:9.1-901-1.jdbc4'
     compile group: 'org.jasypt', name: 'jasypt', version: '1.9.2'
+    compile 'com.github.dirkraft.dropwizard:dropwizard-file-assets:0.0.1'
 
     compile ('org.imsglobal:basiclti-util:1.1.1'){
         exclude group: 'com.fasterxml.jackson.core'

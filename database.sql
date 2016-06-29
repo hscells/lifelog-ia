@@ -1,14 +1,3 @@
-DROP TABLE IF EXISTS
-images,
-people,
-chunks,
-annotated_text_images,
-tags,
-annotated_tag_images,
-assessment_concepts,
-annotated_assessment_images
-CASCADE;
-
 -- images within a chunk are able to be annotated
 CREATE TABLE images (
   id  SERIAL PRIMARY KEY,
@@ -25,6 +14,16 @@ CREATE TABLE people (
   role TEXT DEFAULT 'USER',
   approved BOOLEAN DEFAULT FALSE
 );
+
+DROP TABLE IF EXISTS
+  annotated_text_images,
+  tags,
+  annotated_tag_images,
+  assessment_concepts,
+  annotated_assessment_images,
+  annotated_query_images
+CASCADE;
+
 
 -- when images get annotated, they are added to these tables
 
@@ -47,7 +46,7 @@ CREATE TABLE annotated_tag_images (
   id SERIAL PRIMARY KEY,
   image_id INT REFERENCES images,
   person_id INT REFERENCES people,
-  annotations INT[]
+  annotation TEXT[]
 );
 
 -- relevance assessment annotations have a pool of concepts to be judged. Each annotation is a reference to a concept

@@ -33,21 +33,21 @@ public class TagAnnotationResource {
     }
 
     @GET
-    @Path("images")
+    @Path("/images")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Image> getImages() {
         return tagAnnotationService.getImages();
     }
 
     @GET
-    @Path("tags")
+    @Path("/tags")
     @Produces(MediaType.APPLICATION_JSON)
     public List<String> getTags() {
         return tagAnnotationService.getTags();
     }
 
     @POST
-    @Path("annotate")
+    @Path("/annotate")
     public Response annotate(@Auth Person person, TagAnnotation tagAnnotation) throws SQLException {
         tagAnnotationService.annotate(tagAnnotation.getImageId(), person.getId(), tagAnnotation.getAnnotation());
         return Response.status(200).build();

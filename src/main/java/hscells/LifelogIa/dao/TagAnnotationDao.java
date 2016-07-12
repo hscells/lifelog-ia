@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface TagAnnotationDao {
 
-    @SqlQuery("SELECT id, name, data FROM images WHERE id NOT IN (SELECT image_id FROM annotated_tag_images) ORDER BY random() LIMIT 10")
+    @SqlQuery("SELECT id, name, data FROM images WHERE id NOT IN (SELECT image_id FROM annotated_tag_images) ORDER BY random() LIMIT 1")
     @Mapper(ImageMapper.class)
     List<Image> getImages();
 

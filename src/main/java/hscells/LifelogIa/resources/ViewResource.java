@@ -1,9 +1,6 @@
 package hscells.LifelogIa.resources;
 
-import hscells.LifelogIa.views.AnnotationTagView;
-import hscells.LifelogIa.views.AnnotationTextualView;
-import hscells.LifelogIa.views.HomeView;
-import hscells.LifelogIa.views.RegisterView;
+import hscells.LifelogIa.views.*;
 import io.dropwizard.views.View;
 
 import javax.annotation.security.PermitAll;
@@ -25,7 +22,7 @@ public class ViewResource {
     }
 
     @GET
-    @Path("register")
+    @Path("/register")
     @Produces(MediaType.TEXT_HTML)
     public View registerView() {
         return new RegisterView();
@@ -33,7 +30,7 @@ public class ViewResource {
 
     @GET
     @PermitAll
-    @Path("annotation/textual")
+    @Path("/annotation/textual")
     @Produces(MediaType.TEXT_HTML)
     public View annotationTextualView() {
         return new AnnotationTextualView();
@@ -41,10 +38,18 @@ public class ViewResource {
 
     @GET
     @PermitAll
-    @Path("annotation/tag")
+    @Path("/annotation/tag")
     @Produces(MediaType.TEXT_HTML)
     public View annotationTagView() {
         return new AnnotationTagView();
+    }
+
+    @GET
+    @PermitAll
+    @Path("/annotation/assessment")
+    @Produces(MediaType.TEXT_HTML)
+    public View annotationAssessmentView() {
+        return new AnnotationAssessmentView();
     }
 
 }

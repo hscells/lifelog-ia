@@ -22,7 +22,7 @@ public class PersonResource {
     }
 
     @POST
-    @Path("register")
+    @Path("/register")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registerPerson(PersonDto details) {
         if (personService.registerPerson(details.getAlias(), details.getEmail(), details.getPassword())) {

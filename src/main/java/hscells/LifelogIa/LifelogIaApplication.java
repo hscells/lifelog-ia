@@ -3,15 +3,10 @@ package hscells.LifelogIa;
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
 import hscells.LifelogIa.auth.PersonAuthenticator;
 import hscells.LifelogIa.auth.PersonAuthoriser;
-import hscells.LifelogIa.dao.PersonDao;
-import hscells.LifelogIa.dao.StatsDao;
-import hscells.LifelogIa.dao.TagAnnotationDao;
-import hscells.LifelogIa.dao.TextualAnnotationDao;
+import hscells.LifelogIa.dao.*;
 import hscells.LifelogIa.model.Person;
-import hscells.LifelogIa.resources.PersonResource;
-import hscells.LifelogIa.resources.TagAnnotationResource;
-import hscells.LifelogIa.resources.TextualAnnotationResource;
-import hscells.LifelogIa.resources.ViewResource;
+import hscells.LifelogIa.resources.*;
+import hscells.LifelogIa.service.AssessmentAnnotationService;
 import hscells.LifelogIa.service.PersonService;
 import hscells.LifelogIa.service.TagAnnotationService;
 import hscells.LifelogIa.service.TextualAnnotationService;
@@ -41,17 +36,20 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
 
         final TextualAnnotationDao textualAnnotationDao = jdbi.onDemand(TextualAnnotationDao.class);
         final TagAnnotationDao tagAnnotationDao = jdbi.onDemand(TagAnnotationDao.class);
+        final AssessmentAnnotationDao assessmentAnnotationDao = jdbi.onDemand(AssessmentAnnotationDao.class);
         final PersonDao personDao = jdbi.onDemand(PersonDao.class);
         final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
         final PersonService personService = new PersonService(personDao);
         final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);
         final TagAnnotationService tagAnnotationService = new TagAnnotationService(tagAnnotationDao, jdbi);
+        final AssessmentAnnotationService assessmentAnnotationService = new AssessmentAnnotationService(assessmentAnnotationDao);
 
         PersonAuthenticator personAuthenticator = new PersonAuthenticator(personService);
 
         environment.jersey().register(new TextualAnnotationResource(textualAnnotationService));
         environment.jersey().register(new TagAnnotationResource(tagAnnotationService));
+        environment.jersey().register(new AssessmentAnnotationResource(assessmentAnnotationService));
         environment.jersey().register(new PersonResource(personService));
         environment.jersey().register(new ViewResource());
 

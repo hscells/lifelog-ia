@@ -2,7 +2,8 @@ $(document).ready(function() {
 
   var template = _.template($("#item-template").text());
   var tagTemplate = _.template($("#tag-template").text());
-  var imagesRemaining = 10;
+  var resizedWindow = false;
+  var imagesRemaining = 1;
 
   var imageTags = {};
   var tags = [];
@@ -30,6 +31,11 @@ $(document).ready(function() {
   };
 
   var renderImages = function(images) {
+    if (!resizedWindow) {
+      $("#lifelog-app").height($(document).height());
+      resizedWindow = true;
+    }
+
     for(var i = 0; i < images.length; i++) {
       var image = images[i];
       $("#main").append(template(image));
@@ -97,7 +103,7 @@ $(document).ready(function() {
         $("#item-" + imageId).remove();
         imagesRemaining--;
         if (imagesRemaining === 0) {
-          imagesRemaining = 10;
+          imagesRemaining = 1;
           getImages();
           getTags();
         }

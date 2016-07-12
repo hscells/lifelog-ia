@@ -29,14 +29,14 @@ public class TextualAnnotationResource {
     }
 
     @GET
-    @Path("images")
+    @Path("/images")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Image> getImages() {
         return textualAnnotationService.getImages();
     }
 
     @POST
-    @Path("annotate")
+    @Path("/annotate")
     public Response annotate(@Auth Person person, TextualAnnotation textualAnnotation) {
         textualAnnotationService.annotate(textualAnnotation.getImageId(), person.getId(), textualAnnotation.getAnnotation());
         return Response.status(200).build();

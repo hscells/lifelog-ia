@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>Tag Annotations</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
+        <link href="/static/toastr.min.css" rel="stylesheet">
+        <link href="/static/pace.css" rel="stylesheet">
+        <link href="/static/custom.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <div class="page-header">
+                <h1>Tag Annotator</h1>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <strong>Instructions:</strong>
+                    <ol>
+                        <li>You will be presented with a number of images.</li>
+                        <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
+                        <li>We ask you to tag each image with as many relevant tags as possible. You may add new tags at you see fit.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div id="lifelog-app">
+
+                <section id="main">
+                    <strong id="session-annotated"></strong>
+                    <div id="lifelog-image-list"></div>
+                </section>
+
+            </div>
+        </div> <!-- /container -->
+
+        <script src="/static/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="/static/underscore-min.js" type="text/javascript"></script>
+        <script src="/static/backbone-min.js" type="text/javascript"></script>
+        <script src="/static/toastr.min.js" type="text/javascript"></script>
+        <script src="/static/bootstrap3-typeahead.min.js" type="text/javascript"></script>
+        <script src="/static/pace.min.js" type="text/javascript"></script>
+        <script src="/static/annotation-tag.js" type="text/javascript"></script>
+
+        <script type="text/template" id="item-template">
+            <div id="item-<%- id %>">
+                <h3><%- name %></h3>
+
+                <div class="row">
+
+                    <div class="col-md-7">
+                        <img src="data:image/jpg;base64,<%-  data %>" class="img-responsive" />
+                    </div>
+                    <div class="col-md-5">
+                        <h3>Tags:</h3>
+                        <div class="tags well" id="tags-<%- id %>" style="min-height: 240px;"></div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-7">
+                        <p>Provide tags for this image.</p>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="input-<%- id %>" placeholder="Search for tags...">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default add-tag" type="button" id="<%- id %>">Add tag</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary save" type="button">Next</button>
+                <hr/>
+
+            </div>
+        </script>
+
+        <script type="text/template" id="tag-template">
+            <span class="label label-info tag">
+                <%- name %>
+            </span>
+        </script>
+    </body>
+</html>

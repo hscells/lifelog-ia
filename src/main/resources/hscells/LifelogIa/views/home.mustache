@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+
+        <title>Image Annotator</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="/static/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
+        <link href="/static/toastr.min.css" rel="stylesheet">
+        <link href="/static/custom.css" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+        <div class="container">
+
+            <div class="jumbotron">
+                <h1>Lifelog IA</h1>
+                <p>Welcome to the lifelog image annotator interface. There are four different types of annotation methodologies being researched. Please click one of the following buttons to start annotating.</p>
+                <div role="group">
+                    <a class="btn btn-info" href="/annotation/tag">Tag</a>
+                    <a class="btn btn-danger" href="/annotation/assessment">Relevance Assessment</a>
+                    <a class="btn btn-warning" href="/annotation/textual">Textual</a>
+                    <a class="btn btn-success" href="/annotation/query">Reverse Query</a>
+                </div>
+                <p>In order to annotate, you must first <a href="/register" role="button">register</a>.</p>
+            </div>
+        </div>
+
+        <script src="/static/jquery-1.11.3.min.js" type="text/javascript"></script>
+        <script src="/static/underscore-min.js" type="text/javascript"></script>
+        <script src="/static/backbone-min.js" type="text/javascript"></script>
+        <script src="/static/toastr.min.js" type="text/javascript"></script>
+    </body>
+</html>

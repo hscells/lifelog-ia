@@ -1,14 +1,14 @@
-package hscells.LifelogIa.dto;
+package hscells.LifelogIa.model;
 
 /**
  * Created by Harry Scells on 11/01/2016.
  */
-public class LeaderboardDto {
+public class Leaderboard {
 
     private String name;
     private int numAnnotated;
 
-    public LeaderboardDto(String name, int numAnnotated) {
+    public Leaderboard(String name, int numAnnotated) {
         this.name = name;
         this.numAnnotated = numAnnotated;
     }

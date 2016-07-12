@@ -2,15 +2,6 @@ blockquote {
 	font-size:small;
 }
 
-h3 {
-  margin-top: 45px;
-  margin-bottom: 20px;
-}
-
-h4 {
-  margin-top: 25px;
-}
-
 .row {
   margin-bottom: 20px;
 }
@@ -19,13 +10,18 @@ h4 {
   margin-bottom: 0;
 }
 
-
 hr {
   margin-top: 20px;
-  margin-bottom: 2	0px;
+  margin-bottom: 20px;
 }
 
 .case {
 	margin-left: 20px;
 	margin-bottom: 40px;
+}
+
+.tag {
+    display: inline-block;
+    font-size: 16px;
+    margin: 3px;
 }

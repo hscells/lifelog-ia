@@ -48,6 +48,7 @@ $(document).ready(function() {
       url: "/api/annotations/textual/annotate",
       contentType: "application/json",
       method: "POST",
+      async: false,
       data: JSON.stringify(json),
       success: function() {
         $("#item-" + imageId).remove();

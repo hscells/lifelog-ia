@@ -5,8 +5,9 @@ $(document).ready(function() {
   var resizedWindow = false;
   var imagesRemaining = 1;
 
-  var imageTags = {};
   var tags = [];
+  var suggestions = [];
+  var imageId;
 
   var getTags = function() {
     $.ajax({
@@ -14,7 +15,7 @@ $(document).ready(function() {
       dataType: "json",
       method: "GET",
       success: function(data) {
-        tags = data;
+        suggestions = data;
       }
     });
   };
@@ -31,6 +32,8 @@ $(document).ready(function() {
   };
 
   var renderImages = function(images) {
+    tags = [];
+
     if (!resizedWindow) {
       $("#lifelog-app").height($(document).height());
       resizedWindow = true;
@@ -38,9 +41,10 @@ $(document).ready(function() {
 
     for(var i = 0; i < images.length; i++) {
       var image = images[i];
+      imageId = image["id"];
       $("#main").append(template(image));
 
-      $("#input-" + image["id"]).typeahead({ source: tags });
+      $("#input-" + image["id"]).typeahead({ source: suggestions });
 
       document.querySelector("#input-" + image["id"]).addEventListener("keypress", function(e) {
         var key = e.which || e.keyCode;
@@ -56,30 +60,25 @@ $(document).ready(function() {
     }
 
     $(".save").click(function() {
-      var parentEl = $(this).parent()[0];
-      var imageId = parentEl.id.replace("item-", "");
       annotate(imageId);
     });
 
     $(".add-tag").click(function() {
-      var imageId = this.id;
       var inputEl = $("#input-" + imageId);
       var tag = $(inputEl).val();
       addTag(imageId, tag);
       $(inputEl).val("");
     });
 
+    $("#input-" + imageId).focus();
   };
 
   var addTag = function(imageId, tag) {
     var tagEl = tagTemplate({name: tag});
-    if (imageTags[imageId] === undefined) {
-      imageTags[imageId] = [];
-    }
-    if (imageTags[imageId].indexOf(tag) === -1 && tag != "") {
-      imageTags[imageId].push(tag);
+    if (tags.indexOf(tag) === -1 && tag != "") {
+      tags.push(tag);
       $(tagEl).appendTo($("#tags-" + imageId)).click(function() {
-        imageTags[imageId] = _.without(imageTags[imageId], $(this).text());
+        tags = _.without(tags, $(this).text());
         this.remove();
       });
     } else {
@@ -91,13 +90,14 @@ $(document).ready(function() {
 
     var json = {
       "imageId": imageId,
-      "annotation": imageTags[imageId]
+      "annotation": tags
     };
 
     $.ajax({
       url: "/api/annotations/tag/annotate",
       contentType: "application/json",
       method: "POST",
+      async: false,
       data: JSON.stringify(json),
       success: function() {
         $("#item-" + imageId).remove();

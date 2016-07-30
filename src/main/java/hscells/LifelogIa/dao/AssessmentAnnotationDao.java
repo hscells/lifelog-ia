@@ -31,10 +31,10 @@ public interface AssessmentAnnotationDao {
      ) b USING (row_num)
      WHERE (id, conceptId) NOT IN (
          SELECT id, annotation FROM annotated_assessment_images
-     )
+     ) LIMIT 1;
      * @return
      */
-    @SqlQuery("SELECT id, name, data, concept, concept_id FROM (SELECT id AS concept_id, value AS concept, row_number() OVER () AS row_num FROM assessment_concepts) a JOIN (SELECT id, name, data, (row_number() OVER () % concepts.count) + 1 AS row_num FROM images, (SELECT count(id) AS count FROM assessment_concepts) AS concepts WHERE id NOT IN (SELECT image_id FROM annotated_assessment_images) ORDER BY random() LIMIT 1) b USING (row_num) WHERE (id, concept_id) NOT IN (SELECT id, annotation FROM annotated_assessment_images)")
+    @SqlQuery("SELECT id, name, data, concept, concept_id FROM (SELECT id AS concept_id, value AS concept, row_number() OVER () AS row_num FROM assessment_concepts) a JOIN (SELECT id, name, data, (row_number() OVER () % concepts.count) + 1 AS row_num FROM images, (SELECT count(id) AS count FROM assessment_concepts) AS concepts WHERE id NOT IN (SELECT image_id FROM annotated_assessment_images) ORDER BY random() LIMIT 1) b USING (row_num) WHERE (id, concept_id) NOT IN (SELECT id, annotation FROM annotated_assessment_images) LIMIT 1")
     @Mapper(AssessmentImageMapper.class)
     List<AssessmentImage> getImages();
 

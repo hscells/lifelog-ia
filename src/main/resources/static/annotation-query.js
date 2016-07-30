@@ -3,10 +3,11 @@ $(document).ready(function() {
   var template = _.template($("#item-template").text());
   var resizedWindow = false;
   var imagesRemaining = 1;
+  var imageId;
 
   var getImages = function() {
     $.ajax({
-      url: "/api/annotations/assessment/images",
+      url: "/api/annotations/query/images",
       dataType: "json",
       method: "GET",
       success: function(data) {
@@ -17,35 +18,41 @@ $(document).ready(function() {
 
   var renderImages = function(images) {
     if (!resizedWindow) {
-      $("#lifelog-app").height($(document).height()/1.5);
+      $("#lifelog-app").height($(document).height());
       resizedWindow = true;
     }
-
     for(var i = 0; i < images.length; i++) {
       var image = images[i];
+      imageId = image['id'];
       $("#main").append(template(image));
     }
 
-    $(".assessment-button").click(function() {
-      // ew gross this is such a hack
-      var assessmentIdEl = $(this)[0];
-      var relevance = assessmentIdEl.id.split("-")[0];
-      var imageId = assessmentIdEl.id.split("-")[1];
-      var conceptId = assessmentIdEl.id.split("-")[2];
-      annotate(imageId, relevance, conceptId);
+    $("#save").click(function() {
+      annotate(imageId);
     });
+
+    $("#annotation").keydown(function (e) {
+      //noinspection JSUnresolvedVariable
+      var keyCode = e.keyCode ? e.keyCode : e.witch;
+      if (keyCode == 13) {
+        annotate(imageId);
+      }
+    });
+
+    $("#annotation").focus();
 
   };
 
-  var annotate = function(imageId, relevance, conceptId) {
+  var annotate = function(imageId) {
+    var annotation = $("#annotation").val();
+
     var json = {
       "imageId": imageId,
-      "relevance": relevance,
-      "conceptId": conceptId
+      "annotation": annotation
     };
 
     $.ajax({
-      url: "/api/annotations/assessment/annotate",
+      url: "/api/annotations/query/annotate",
       contentType: "application/json",
       method: "POST",
       async: false,

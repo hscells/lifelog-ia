@@ -6,10 +6,7 @@ import hscells.LifelogIa.auth.PersonAuthoriser;
 import hscells.LifelogIa.dao.*;
 import hscells.LifelogIa.model.Person;
 import hscells.LifelogIa.resources.*;
-import hscells.LifelogIa.service.AssessmentAnnotationService;
-import hscells.LifelogIa.service.PersonService;
-import hscells.LifelogIa.service.TagAnnotationService;
-import hscells.LifelogIa.service.TextualAnnotationService;
+import hscells.LifelogIa.service.*;
 import io.dropwizard.Application;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
@@ -37,6 +34,7 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final TextualAnnotationDao textualAnnotationDao = jdbi.onDemand(TextualAnnotationDao.class);
         final TagAnnotationDao tagAnnotationDao = jdbi.onDemand(TagAnnotationDao.class);
         final AssessmentAnnotationDao assessmentAnnotationDao = jdbi.onDemand(AssessmentAnnotationDao.class);
+        final ReverseQueryDao reverseQueryDao = jdbi.onDemand(ReverseQueryDao.class);
         final PersonDao personDao = jdbi.onDemand(PersonDao.class);
         final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
@@ -44,12 +42,14 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);
         final TagAnnotationService tagAnnotationService = new TagAnnotationService(tagAnnotationDao, jdbi);
         final AssessmentAnnotationService assessmentAnnotationService = new AssessmentAnnotationService(assessmentAnnotationDao);
+        final ReverseQueryAnnotationService reverseQueryAnnotationService = new ReverseQueryAnnotationService(reverseQueryDao);
 
         PersonAuthenticator personAuthenticator = new PersonAuthenticator(personService);
 
         environment.jersey().register(new TextualAnnotationResource(textualAnnotationService));
         environment.jersey().register(new TagAnnotationResource(tagAnnotationService));
         environment.jersey().register(new AssessmentAnnotationResource(assessmentAnnotationService));
+        environment.jersey().register(new ReverseQueryAnnotationResource(reverseQueryAnnotationService));
         environment.jersey().register(new PersonResource(personService));
         environment.jersey().register(new ViewResource());
 

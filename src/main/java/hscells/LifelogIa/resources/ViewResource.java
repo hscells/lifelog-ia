@@ -52,4 +52,12 @@ public class ViewResource {
         return new AnnotationAssessmentView();
     }
 
+    @GET
+    @PermitAll
+    @Path("/annotation/query")
+    @Produces(MediaType.TEXT_HTML)
+    public View reverseQueryAssessmentView() {
+        return new ReverseQueryView();
+    }
+
 }

@@ -28,11 +28,12 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <p><a href="/">Go Home</a></p>
                     <strong>Instructions:</strong>
                     <ol>
-                        <li>You will be presented with a number of images.</li>
+                        <li>You will be presented with an image.</li>
                         <li>The images were shot with a personal lifelog camera, i.e. a camera hanging off the chest of the person wearing it. The images depict scenes of everyday life.</li>
-                        <li>We ask you to describe each image with as many details as possible. Write your description as if you were the person wearing the camera. For example, write "I am discussing some results with a colleague on a computer monitor in my office.". Include as many details as possible in your description. If an image doesn't have anything in it (for example it has a black blur), then write "N/A" (without quotes).</li>
+                        <li>We ask you to judge the relevance of a concept with respect to an image. You must rank the relevance on a scale of 0 to 10, with 0 being not relevant and 10 being highly relevant.  If an image doesn't have anything in it (for example it is very blurry), then please score the image as 0.</li>
                     </ol>
                 </div>
             </div>
@@ -63,7 +64,7 @@
                         <img src="data:image/jpg;base64,<%- data %>" class="img-responsive"/>
                     </div>
                     <div class="col-md-6">
-                        <p>How relevant is the concept <em><%- concept %></em> to the above image?</p>
+                        <p>How relevant is the concept <em><%- concept %></em> to the image?</p>
 
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-default assessment-button" id="0-<%- id %>-<%- conceptId %>">0</button>

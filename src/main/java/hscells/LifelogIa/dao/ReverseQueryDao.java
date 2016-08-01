@@ -7,8 +7,6 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
-import java.util.List;
-
 /**
  * Created by Harry Scells on 28/06/2016.
  */

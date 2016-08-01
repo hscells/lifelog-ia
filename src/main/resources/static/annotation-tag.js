@@ -3,11 +3,25 @@ $(document).ready(function() {
   var template = _.template($("#item-template").text());
   var tagTemplate = _.template($("#tag-template").text());
   var resizedWindow = false;
-  var imagesRemaining = 1;
 
   var tags = [];
-  var suggestions = [];
   var imageId;
+  var renderDeferred;
+
+  var getImage = function() {
+    renderDeferred = $.Deferred();
+    $.ajax({
+      url: "/api/annotations/tag/images",
+      dataType: "json",
+      method: "GET",
+      success: function(data) {
+        renderImage(data);
+        $.when(renderDeferred).done(function() {
+          getTags();
+        });
+      }
+    });
+  };
 
   var getTags = function() {
     $.ajax({
@@ -15,68 +29,65 @@ $(document).ready(function() {
       dataType: "json",
       method: "GET",
       success: function(data) {
-        suggestions = data;
+        // initialise the typeahead and focus the text field
+        $("#input").typeahead({ source: data }).focus();
       }
     });
   };
 
-  var getImages = function() {
-    $.ajax({
-      url: "/api/annotations/tag/images",
-      dataType: "json",
-      method: "GET",
-      success: function(data) {
-          renderImages(data)
-      }
-    });
-  };
-
-  var renderImages = function(images) {
-    tags = [];
-
+  var renderImage = function(image) {
+    // resize the size of the screen so annotators don't have to scroll
     if (!resizedWindow) {
       $("#lifelog-app").height($(document).height());
       resizedWindow = true;
     }
 
-    for(var i = 0; i < images.length; i++) {
-      var image = images[i];
-      imageId = image["id"];
-      $("#main").append(template(image));
+    // this empties the list of tags
+    tags = [];
 
-      $("#input-" + image["id"]).typeahead({ source: suggestions });
+    imageId = image["id"];
+    $("#main").html(template(image)).fadeIn('fast');
 
-      document.querySelector("#input-" + image["id"]).addEventListener("keypress", function(e) {
-        var key = e.which || e.keyCode;
-        if (key === 13) {
-          var el = this;
-          var imageId = el.id.replace("input-", "");
-          var tag = $(el).val();
-          addTag(imageId, tag);
-          $(el).val("");
-        }
-      });
+    // we need an event listener so that the enter key can add tags
+    $("#input").keypress(function(e) {
+      var key = e.which || e.keyCode;
+      if (key === 13) {
+        var el = this;
+        var tag = $(el).val();
+        addTag(imageId, tag);
+        $(el).val("");
+      }
+    });
 
-    }
-
+    // event listener to move onto the next item
     $(".save").click(function() {
       annotate(imageId);
     });
 
+    // event listener for doing the same thing as pressing enter in the text field
     $(".add-tag").click(function() {
-      var inputEl = $("#input-" + imageId);
+      var inputEl = $("#input");
       var tag = $(inputEl).val();
       addTag(imageId, tag);
       $(inputEl).val("");
     });
 
-    $("#input-" + imageId).focus();
+    //noinspection JSUnresolvedFunction
+    renderDeferred.resolve();
   };
 
+  /**
+   * Visually add a tag to the interface
+   * @param imageId
+   * @param tag
+   */
   var addTag = function(imageId, tag) {
+    // create a dom node from the template
     var tagEl = tagTemplate({name: tag});
+    // check if the tag has already been added or if it's empty
     if (tags.indexOf(tag) === -1 && tag != "") {
       tags.push(tag);
+      // add an event listener to remove the tag once it's been added in the interface
       $(tagEl).appendTo($("#tags-" + imageId)).click(function() {
         tags = _.without(tags, $(this).text());
         this.remove();
@@ -100,18 +111,14 @@ $(document).ready(function() {
       async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#item-" + imageId).remove();
-        imagesRemaining--;
-        if (imagesRemaining === 0) {
-          imagesRemaining = 1;
-          getImages();
-          getTags();
-        }
+        $("#main").fadeOut('fast');
+        getImage();
+        getTags();
       }
     })
   };
 
-  getImages();
+  getImage();
   getTags();
 
 });

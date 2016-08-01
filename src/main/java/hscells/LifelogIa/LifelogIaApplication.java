@@ -36,7 +36,6 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final AssessmentAnnotationDao assessmentAnnotationDao = jdbi.onDemand(AssessmentAnnotationDao.class);
         final ReverseQueryDao reverseQueryDao = jdbi.onDemand(ReverseQueryDao.class);
         final PersonDao personDao = jdbi.onDemand(PersonDao.class);
-        final StatsDao statsDao = jdbi.onDemand(StatsDao.class);
 
         final PersonService personService = new PersonService(personDao);
         final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);

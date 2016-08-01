@@ -1,7 +1,7 @@
 package hscells.LifelogIa.model;
 
 /**
- * Created by Harry Scells on 2/07/2016.
+ * Created by Harry Scells on 1/08/2016.
  */
 public class AssessmentAnnotation {
 

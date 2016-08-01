@@ -2,10 +2,8 @@ $(document).ready(function() {
 
   var template = _.template($("#item-template").text());
   var resizedWindow = false;
-  var imagesRemaining = 1;
-  var imageId;
 
-  var getImages = function() {
+  var getImage = function() {
     $.ajax({
       url: "/api/annotations/query/images",
       dataType: "json",
@@ -16,30 +14,29 @@ $(document).ready(function() {
     })
   };
 
-  var renderImages = function(images) {
+  var renderImages = function(image) {
+    // resize the size of the screen so annotators don't have to scroll
     if (!resizedWindow) {
       $("#lifelog-app").height($(document).height());
       resizedWindow = true;
     }
-    for(var i = 0; i < images.length; i++) {
-      var image = images[i];
-      imageId = image['id'];
-      $("#main").append(template(image));
-    }
 
+    // render the item
+    $("#main").html(template(image)).fadeIn('fast');
+
+    // add an event listener for the save button
     $("#save").click(function() {
-      annotate(imageId);
+      annotate(image["id"]);
     });
+
 
     $("#annotation").keydown(function (e) {
       //noinspection JSUnresolvedVariable
       var keyCode = e.keyCode ? e.keyCode : e.witch;
       if (keyCode == 13) {
-        annotate(imageId);
+        annotate(image["id"]);
       }
-    });
-
-    $("#annotation").focus();
+    }).focus(); // place the cursor in the text field
 
   };
 
@@ -58,15 +55,11 @@ $(document).ready(function() {
       async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#item-" + imageId).remove();
-        imagesRemaining--;
-        if (imagesRemaining === 0) {
-          imagesRemaining = 1;
-          getImages();
-        }
+        $("#main").fadeOut('fast');
+        getImage();
       }
     })
   };
 
-  getImages();
+  getImage();
 });

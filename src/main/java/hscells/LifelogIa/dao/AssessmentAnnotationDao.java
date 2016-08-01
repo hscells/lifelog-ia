@@ -1,11 +1,15 @@
 package hscells.LifelogIa.dao;
 
 import hscells.LifelogIa.mapper.ImageMapper;
+import hscells.LifelogIa.mapper.RelevanceConceptMapper;
 import hscells.LifelogIa.model.Image;
+import hscells.LifelogIa.model.RelevanceConcept;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
+
+import java.util.List;
 
 /**
  * Created by Harry Scells on 2/07/2016.
@@ -16,7 +20,9 @@ public interface AssessmentAnnotationDao {
     @Mapper(ImageMapper.class)
     Image getImage();
 
-
+    @SqlQuery("SELECT DISTINCT concepts.id, concepts.value FROM assessment_concepts concepts JOIN annotated_assessment_images ON concepts.id NOT IN (SELECT annotation FROM annotated_assessment_images WHERE image_id = :imageId) LIMIT 10;")
+    @Mapper(RelevanceConceptMapper.class)
+    List<RelevanceConcept> getConceptsForImage(@Bind("imageId") int imageId);
 
     @SqlUpdate("INSERT INTO annotated_assessment_images (image_id, person_id, annotation, relevance) VALUES (:imageId, :personId, :conceptId, :relevance)")
     void annotate(@Bind("imageId") int imageId, @Bind("personId") int personId, @Bind("conceptId") int conceptId, @Bind("relevance") int relevance);

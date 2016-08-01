@@ -1,12 +1,9 @@
 package hscells.LifelogIa.resources;
 
-import hscells.LifelogIa.dao.TagAnnotationDao;
 import hscells.LifelogIa.model.Image;
 import hscells.LifelogIa.model.Person;
 import hscells.LifelogIa.model.TagAnnotation;
-import hscells.LifelogIa.model.TextualAnnotation;
 import hscells.LifelogIa.service.TagAnnotationService;
-import hscells.LifelogIa.service.TextualAnnotationService;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;
@@ -35,8 +32,8 @@ public class TagAnnotationResource {
     @GET
     @Path("/images")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Image> getImages() {
-        return tagAnnotationService.getImages();
+    public Image getImage() {
+        return tagAnnotationService.getImage();
     }
 
     @GET

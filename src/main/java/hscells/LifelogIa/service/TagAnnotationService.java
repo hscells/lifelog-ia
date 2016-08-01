@@ -21,8 +21,8 @@ public class TagAnnotationService {
         this.jdbi = jdbi;
     }
 
-    public List<Image> getImages() {
-        return tagAnnotationDao.getImages();
+    public Image getImage() {
+        return tagAnnotationDao.getImage();
     }
 
     public List<String> getTags() {

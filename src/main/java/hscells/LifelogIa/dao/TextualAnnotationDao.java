@@ -7,8 +7,6 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
-import java.util.List;
-
 /**
  * Created by Harry Scells on 28/06/2016.
  */
@@ -16,7 +14,7 @@ public interface TextualAnnotationDao {
 
     @SqlQuery("SELECT id, name, data FROM images WHERE id NOT IN (SELECT image_id FROM annotated_text_images) ORDER BY random() LIMIT 1")
     @Mapper(ImageMapper.class)
-    List<Image> getImages();
+    Image getImage();
 
     @SqlUpdate("INSERT INTO annotated_text_images (image_id, person_id, annotation) VALUES (:image_id, :person_id, :annotation)")
     void annotateImage(@Bind("image_id") int imageId, @Bind("person_id") int personId, @Bind("annotation") String annotation);

@@ -2,7 +2,8 @@ package hscells.LifelogIa.service;
 
 import hscells.LifelogIa.dao.AssessmentAnnotationDao;
 import hscells.LifelogIa.model.AssessmentAnnotation;
-import hscells.LifelogIa.model.AssessmentImage;
+import hscells.LifelogIa.model.Image;
+import hscells.LifelogIa.model.RelevanceConcept;
 
 import java.util.List;
 
@@ -17,8 +18,12 @@ public class AssessmentAnnotationService {
         this.assessmentAnnotationDao = assessmentAnnotationDao;
     }
 
-    public List<AssessmentImage> getImages() {
-        return assessmentAnnotationDao.getImages();
+    public Image getImage() {
+        return assessmentAnnotationDao.getImage();
+    }
+
+    public List<RelevanceConcept> getConceptsForImage(int imageId) {
+        return assessmentAnnotationDao.getConceptsForImage(imageId);
     }
 
     public void annotate(AssessmentAnnotation assessmentAnnotation) {

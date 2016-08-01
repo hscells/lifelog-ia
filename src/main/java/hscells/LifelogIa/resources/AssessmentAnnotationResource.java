@@ -1,16 +1,14 @@
 package hscells.LifelogIa.resources;
 
 import hscells.LifelogIa.model.AssessmentAnnotation;
-import hscells.LifelogIa.model.AssessmentImage;
+import hscells.LifelogIa.model.Image;
 import hscells.LifelogIa.model.Person;
+import hscells.LifelogIa.model.RelevanceConcept;
 import hscells.LifelogIa.service.AssessmentAnnotationService;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -31,8 +29,15 @@ public class AssessmentAnnotationResource {
     @GET
     @Path("/images")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<AssessmentImage> getImages() {
-        return assessmentAnnotationService.getImages();
+    public Image getImage() {
+        return assessmentAnnotationService.getImage();
+    }
+
+    @GET
+    @Path("/concepts/{imageId}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<RelevanceConcept> getConceptsForImage(@PathParam("imageId") int imageId) {
+        return assessmentAnnotationService.getConceptsForImage(imageId);
     }
 
     @POST

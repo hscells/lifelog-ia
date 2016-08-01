@@ -1,10 +1,7 @@
 package hscells.LifelogIa.service;
 
 import hscells.LifelogIa.dao.ReverseQueryDao;
-import hscells.LifelogIa.dao.TextualAnnotationDao;
 import hscells.LifelogIa.model.Image;
-
-import java.util.List;
 
 /**
  * Created by Harry Scells on 28/06/2016.
@@ -17,8 +14,8 @@ public class ReverseQueryAnnotationService {
         this.reverseQueryDao = textualAnnotationDao;
     }
 
-    public List<Image> getImages() {
-        return reverseQueryDao.getImages();
+    public Image getImage() {
+        return reverseQueryDao.getImage();
     }
 
     public void annotate(int imageId, int personId, String annotation) {

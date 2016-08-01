@@ -1,8 +1,9 @@
 package hscells.LifelogIa.dao;
 
-import hscells.LifelogIa.mapper.AssessmentImageMapper;
-import hscells.LifelogIa.model.AssessmentImage;
+import hscells.LifelogIa.mapper.ImageMapper;
+import hscells.LifelogIa.mapper.RelevanceConceptMapper;
 import hscells.LifelogIa.model.Image;
+import hscells.LifelogIa.model.RelevanceConcept;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
@@ -15,28 +16,13 @@ import java.util.List;
  */
 public interface AssessmentAnnotationDao {
 
-    /**
-     *
-     SELECT id, name, data, concept, conceptId
-     FROM (
-         SELECT id AS conceptId, value AS concept, row_number() OVER () AS row_num
-         FROM assessment_concepts
-     ) a
-     JOIN (
-         SELECT id, name, data, (row_number() OVER () % concepts.count) + 1 AS row_num
-         FROM images, (SELECT count(id) AS count FROM assessment_concepts) AS concepts
-         WHERE id NOT IN (SELECT image_id FROM annotated_assessment_images)
-         ORDER BY random()
-         LIMIT 1
-     ) b USING (row_num)
-     WHERE (id, conceptId) NOT IN (
-         SELECT id, annotation FROM annotated_assessment_images
-     ) LIMIT 1;
-     * @return
-     */
-    @SqlQuery("SELECT id, name, data, concept, concept_id FROM (SELECT id AS concept_id, value AS concept, row_number() OVER () AS row_num FROM assessment_concepts) a JOIN (SELECT id, name, data, (row_number() OVER () % concepts.count) + 1 AS row_num FROM images, (SELECT count(id) AS count FROM assessment_concepts) AS concepts WHERE id NOT IN (SELECT image_id FROM annotated_assessment_images) ORDER BY random() LIMIT 1) b USING (row_num) WHERE (id, concept_id) NOT IN (SELECT id, annotation FROM annotated_assessment_images) LIMIT 1")
-    @Mapper(AssessmentImageMapper.class)
-    List<AssessmentImage> getImages();
+    @SqlQuery("SELECT id, name, data FROM images WHERE id NOT IN (SELECT image_id FROM annotated_assessment_images) ORDER BY random() LIMIT 1")
+    @Mapper(ImageMapper.class)
+    Image getImage();
+
+    @SqlQuery("SELECT DISTINCT concepts.id, concepts.value FROM assessment_concepts concepts JOIN annotated_assessment_images ON concepts.id NOT IN (SELECT annotation FROM annotated_assessment_images WHERE image_id = :imageId) LIMIT 10;")
+    @Mapper(RelevanceConceptMapper.class)
+    List<RelevanceConcept> getConceptsForImage(@Bind("imageId") int imageId);
 
     @SqlUpdate("INSERT INTO annotated_assessment_images (image_id, person_id, annotation, relevance) VALUES (:imageId, :personId, :conceptId, :relevance)")
     void annotate(@Bind("imageId") int imageId, @Bind("personId") int personId, @Bind("conceptId") int conceptId, @Bind("relevance") int relevance);

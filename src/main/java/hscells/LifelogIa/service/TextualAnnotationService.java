@@ -3,8 +3,6 @@ package hscells.LifelogIa.service;
 import hscells.LifelogIa.dao.TextualAnnotationDao;
 import hscells.LifelogIa.model.Image;
 
-import java.util.List;
-
 /**
  * Created by Harry Scells on 28/06/2016.
  */
@@ -16,8 +14,8 @@ public class TextualAnnotationService {
         this.textualAnnotationDao = textualAnnotationDao;
     }
 
-    public List<Image> getImages() {
-        return textualAnnotationDao.getImages();
+    public Image getImage() {
+        return textualAnnotationDao.getImage();
     }
 
     public void annotate(int imageId, int personId, String annotation) {

@@ -2,31 +2,29 @@ $(document).ready(function() {
 
   var template = _.template($("#item-template").text());
   var resizedWindow = false;
-  var imagesRemaining = 1;
 
-  var getImages = function() {
+  var getImage = function() {
     $.ajax({
       url: "/api/annotations/textual/images",
       dataType: "json",
       method: "GET",
       success: function(data) {
-          renderImages(data)
+          renderImage(data)
       }
     })
   };
 
-  var renderImages = function(images) {
+  var renderImage = function(image) {
+    // resize the size of the screen so annotators don't have to scroll
     if (!resizedWindow) {
       $("#lifelog-app").height($(document).height());
       resizedWindow = true;
     }
 
+    // render the item in the interface
+    $("#main").html(template(image)).fadeIn('fast');
 
-    for(var i = 0; i < images.length; i++) {
-      var image = images[i];
-      $("#main").append(template(image));
-    }
-
+    // add an event listener to the save button to move onto the next image to be annotated
     $(".save").click(function() {
       // ew gross this is such a hack
       var textbox = $(this).prev()[0];
@@ -51,15 +49,11 @@ $(document).ready(function() {
       async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#item-" + imageId).remove();
-        imagesRemaining--;
-        if (imagesRemaining === 0) {
-          imagesRemaining = 1;
-          getImages();
-        }
+        $("#main").fadeOut('fast');
+        getImage();
       }
     })
   };
 
-  getImages();
+  getImage();
 });

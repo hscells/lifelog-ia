@@ -17,7 +17,7 @@ public class TextualAnnotationService {
     }
 
     public List<Image> getImages() {
-        return textualAnnotationDao.getImages();
+        return textualAnnotationDao.getImage();
     }
 
     public void annotate(int imageId, int personId, String annotation) {

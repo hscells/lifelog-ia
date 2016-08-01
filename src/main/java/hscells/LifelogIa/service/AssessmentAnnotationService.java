@@ -18,7 +18,7 @@ public class AssessmentAnnotationService {
     }
 
     public List<AssessmentImage> getImages() {
-        return assessmentAnnotationDao.getImages();
+        return assessmentAnnotationDao.getImage();
     }
 
     public void annotate(AssessmentAnnotation assessmentAnnotation) {

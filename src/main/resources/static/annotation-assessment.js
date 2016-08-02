@@ -73,6 +73,8 @@ $(document).ready(function() {
       "conceptId": conceptId
     };
 
+    $("#" + conceptId).remove();
+
     $.ajax({
       url: "/api/annotations/assessment/annotate",
       contentType: "application/json",
@@ -80,15 +82,17 @@ $(document).ready(function() {
       async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#" + conceptId).remove();
         conceptsRemaining--;
         if (conceptsRemaining === 0) {
           conceptsRemaining = 1;
           $("#main").fadeOut('fast');
           getImage();
         }
+      },
+      error: function() {
+        toastr.error("Error communicating with server!");
       }
-    })
+    });
   };
 
   getImage();

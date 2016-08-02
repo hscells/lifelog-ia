@@ -14,6 +14,7 @@
         <!-- Bootstrap core CSS -->
         <link href="/static/bootstrap.min.css" rel="stylesheet">
         <link href="/static/sticky-footer-navbar.css" rel="stylesheet">
+        <link href="/static/toastr.min.css" rel="stylesheet">
         <link href="/static/pace.css" rel="stylesheet">
         <link href="/static/custom.css" rel="stylesheet">
 
@@ -51,6 +52,7 @@
         <script src="/static/jquery-1.11.3.min.js" type="text/javascript"></script>
         <script src="/static/underscore-min.js" type="text/javascript"></script>
         <script src="/static/backbone-min.js" type="text/javascript"></script>
+        <script src="/static/toastr.min.js" type="text/javascript"></script>
         <script src="/static/pace.min.js" type="text/javascript"></script>
         <script src="/static/annotation-assessment.js" type="text/javascript"></script>
 
@@ -64,6 +66,7 @@
                         <img src="data:image/jpg;base64,<%- data %>" class="img-responsive"/>
                     </div>
                     <div class="col-md-6">
+                        <p>How relevant are these concepts to the image?</p>
                         <div id="assessments"></div>
                     </div>
                 </div>
@@ -72,19 +75,21 @@
         </script>
 
         <script type="text/template" id="assessment-template">
-            <div id="<%- id %>" class="btn-group" role="group">
-                <p>How relevant is the concept <em><%- value %></em> to the image?</p>
-                <button type="button" class="btn btn-default assessment-button" id="0-<%- id %>">0</button>
-                <button type="button" class="btn btn-default assessment-button" id="1-<%- id %>">1</button>
-                <button type="button" class="btn btn-default assessment-button" id="2-<%- id %>">2</button>
-                <button type="button" class="btn btn-default assessment-button" id="3-<%- id %>">3</button>
-                <button type="button" class="btn btn-default assessment-button" id="4-<%- id %>">4</button>
-                <button type="button" class="btn btn-default assessment-button" id="5-<%- id %>">5</button>
-                <button type="button" class="btn btn-default assessment-button" id="6-<%- id %>">6</button>
-                <button type="button" class="btn btn-default assessment-button" id="7-<%- id %>">7</button>
-                <button type="button" class="btn btn-default assessment-button" id="8-<%- id %>">8</button>
-                <button type="button" class="btn btn-default assessment-button" id="9-<%- id %>">9</button>
-                <button type="button" class="btn btn-default assessment-button" id="10-<%- id %>">10</button>
+            <div id="<%- id %>">
+                <p><b><%- value %></b></p>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-default assessment-button" id="0-<%- id %>">0</button>
+                    <button type="button" class="btn btn-default assessment-button" id="1-<%- id %>">1</button>
+                    <button type="button" class="btn btn-default assessment-button" id="2-<%- id %>">2</button>
+                    <button type="button" class="btn btn-default assessment-button" id="3-<%- id %>">3</button>
+                    <button type="button" class="btn btn-default assessment-button" id="4-<%- id %>">4</button>
+                    <button type="button" class="btn btn-default assessment-button" id="5-<%- id %>">5</button>
+                    <button type="button" class="btn btn-default assessment-button" id="6-<%- id %>">6</button>
+                    <button type="button" class="btn btn-default assessment-button" id="7-<%- id %>">7</button>
+                    <button type="button" class="btn btn-default assessment-button" id="8-<%- id %>">8</button>
+                    <button type="button" class="btn btn-default assessment-button" id="9-<%- id %>">9</button>
+                    <button type="button" class="btn btn-default assessment-button" id="10-<%- id %>">10</button>
+                </div>
             </div>
         </script>
     </body>

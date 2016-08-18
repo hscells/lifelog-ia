@@ -1,7 +1,7 @@
-package hscells.lifelogia.dao;
+package com.hscells.lifelogia.dao;
 
-import hscells.lifelogia.mapper.PersonMapper;
-import hscells.lifelogia.model.Person;
+import com.hscells.lifelogia.mapper.PersonMapper;
+import com.hscells.lifelogia.model.Person;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

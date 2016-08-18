@@ -1,6 +1,6 @@
-package hscells.lifelogia.mapper;
+package com.hscells.lifelogia.mapper;
 
-import hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.model.Image;
 import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 

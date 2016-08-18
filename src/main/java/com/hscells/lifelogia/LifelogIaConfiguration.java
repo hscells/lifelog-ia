@@ -1,4 +1,4 @@
-package hscells.lifelogia;
+package com.hscells.lifelogia;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.cache.CacheBuilderSpec;

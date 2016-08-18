@@ -1,9 +1,9 @@
-package hscells.lifelogia.resources;
+package com.hscells.lifelogia.resources;
 
-import hscells.lifelogia.model.Image;
-import hscells.lifelogia.model.Person;
-import hscells.lifelogia.model.TextualAnnotation;
-import hscells.lifelogia.service.TextualAnnotationService;
+import com.hscells.lifelogia.service.TextualAnnotationService;
+import com.hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.model.Person;
+import com.hscells.lifelogia.model.TextualAnnotation;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;

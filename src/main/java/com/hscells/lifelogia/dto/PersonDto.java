@@ -1,4 +1,4 @@
-package hscells.lifelogia.dto;
+package com.hscells.lifelogia.dto;
 
 /**
  * Created by Harry Scells on 28/06/2016.

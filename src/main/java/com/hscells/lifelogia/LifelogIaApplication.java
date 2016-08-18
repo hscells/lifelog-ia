@@ -1,13 +1,14 @@
-package hscells.lifelogia;
+package com.hscells.lifelogia;
 
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
-import hscells.lifelogia.auth.PersonAuthenticator;
-import hscells.lifelogia.auth.PersonAuthoriser;
-import hscells.lifelogia.dao.*;
-import hscells.lifelogia.model.Person;
-import hscells.lifelogia.resources.*;
-import hscells.lifelogia.service.*;
+import com.hscells.lifelogia.auth.PersonAuthoriser;
+import com.hscells.lifelogia.dao.*;
+import com.hscells.lifelogia.resources.*;
+import com.hscells.lifelogia.service.*;
+import com.hscells.lifelogia.auth.PersonAuthenticator;
+import com.hscells.lifelogia.model.Person;
 import io.dropwizard.Application;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.auth.CachingAuthenticator;
@@ -79,8 +80,8 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
 
     @Override
     public void initialize(Bootstrap<LifelogIaConfiguration> bootstrap) {
-//        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
-        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/static", "/static", "*"));
+        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
+//        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/static", "/static", "*"));
         bootstrap.addBundle(new ViewBundle<>());
     }
 

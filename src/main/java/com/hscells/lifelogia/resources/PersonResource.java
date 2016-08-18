@@ -1,7 +1,7 @@
-package hscells.lifelogia.resources;
+package com.hscells.lifelogia.resources;
 
-import hscells.lifelogia.dto.PersonDto;
-import hscells.lifelogia.service.PersonService;
+import com.hscells.lifelogia.dto.PersonDto;
+import com.hscells.lifelogia.service.PersonService;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

@@ -1,4 +1,4 @@
-package hscells.lifelogia.model;
+package com.hscells.lifelogia.model;
 
 /**
  * Created by Harry Scells on 28/06/2016.

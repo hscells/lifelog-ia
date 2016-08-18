@@ -1,7 +1,7 @@
-package hscells.lifelogia.dao;
+package com.hscells.lifelogia.dao;
 
-import hscells.lifelogia.mapper.ImageMapper;
-import hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.mapper.ImageMapper;
+import com.hscells.lifelogia.model.Image;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

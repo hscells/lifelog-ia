@@ -1,12 +1,12 @@
-package hscells.lifelogia.auth;
+package com.hscells.lifelogia.auth;
 
-import com.google.common.base.Optional;
-import hscells.lifelogia.model.Person;
-import hscells.lifelogia.service.PersonService;
+import com.hscells.lifelogia.model.Person;
+import com.hscells.lifelogia.service.PersonService;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
 import io.dropwizard.auth.basic.BasicCredentials;
 
+import java.util.Optional;
 
 /**
  * Created by Harry Scells on 28/06/2016.
@@ -25,7 +25,7 @@ public class PersonAuthenticator implements Authenticator<BasicCredentials, Pers
             return Optional.of(personService.getPersonByAlias(credentials.getUsername()));
         }
 
-        return Optional.absent();
+        return Optional.empty();
     }
 
 }

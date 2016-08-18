@@ -1,7 +1,7 @@
-package hscells.lifelogia.service;
+package com.hscells.lifelogia.service;
 
-import hscells.lifelogia.dao.TagAnnotationDao;
-import hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.dao.TagAnnotationDao;
+import com.hscells.lifelogia.model.Image;
 import org.skife.jdbi.v2.DBI;
 
 import java.sql.Array;

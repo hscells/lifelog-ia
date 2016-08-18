@@ -1,9 +1,9 @@
-package hscells.lifelogia.service;
+package com.hscells.lifelogia.service;
 
-import hscells.lifelogia.dao.AssessmentAnnotationDao;
-import hscells.lifelogia.model.AssessmentAnnotation;
-import hscells.lifelogia.model.Image;
-import hscells.lifelogia.model.RelevanceConcept;
+import com.hscells.lifelogia.model.RelevanceConcept;
+import com.hscells.lifelogia.dao.AssessmentAnnotationDao;
+import com.hscells.lifelogia.model.AssessmentAnnotation;
+import com.hscells.lifelogia.model.Image;
 
 import java.util.List;
 

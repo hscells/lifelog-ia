@@ -1,7 +1,7 @@
-package hscells.lifelogia.service;
+package com.hscells.lifelogia.service;
 
-import hscells.lifelogia.dao.PersonDao;
-import hscells.lifelogia.model.Person;
+import com.hscells.lifelogia.dao.PersonDao;
+import com.hscells.lifelogia.model.Person;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**

@@ -1,4 +1,4 @@
-package hscells.lifelogia.views;
+package com.hscells.lifelogia.views;
 
 import io.dropwizard.views.View;
 

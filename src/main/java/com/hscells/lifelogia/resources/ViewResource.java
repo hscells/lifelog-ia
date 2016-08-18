@@ -1,6 +1,6 @@
-package hscells.lifelogia.resources;
+package com.hscells.lifelogia.resources;
 
-import hscells.lifelogia.views.*;
+import com.hscells.lifelogia.views.*;
 import io.dropwizard.views.View;
 
 import javax.annotation.security.PermitAll;

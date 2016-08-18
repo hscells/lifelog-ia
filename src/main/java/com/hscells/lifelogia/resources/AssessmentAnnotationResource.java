@@ -1,10 +1,10 @@
-package hscells.lifelogia.resources;
+package com.hscells.lifelogia.resources;
 
-import hscells.lifelogia.model.AssessmentAnnotation;
-import hscells.lifelogia.model.Image;
-import hscells.lifelogia.model.Person;
-import hscells.lifelogia.model.RelevanceConcept;
-import hscells.lifelogia.service.AssessmentAnnotationService;
+import com.hscells.lifelogia.model.AssessmentAnnotation;
+import com.hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.model.RelevanceConcept;
+import com.hscells.lifelogia.service.AssessmentAnnotationService;
+import com.hscells.lifelogia.model.Person;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;

@@ -1,4 +1,4 @@
-package hscells.lifelogia.model;
+package com.hscells.lifelogia.model;
 
 import java.util.List;
 

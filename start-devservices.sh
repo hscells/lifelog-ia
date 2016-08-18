@@ -6,7 +6,7 @@ echo "Building LifeLog Image Annotator"
 echo "Starting LifeLog Image Annotator"
 
 # start server
-./build/install/LifelogIa/bin/LifelogIa server configuration.yml & LLIA_PID=$!
+./build/install/lifelogia/bin/lifelogia server configuration.yml & LLIA_PID=$!
 
 #call the "handle_kill" function when signals are received.
 trap handle_kill SIGINT SIGTERM SIGKILL

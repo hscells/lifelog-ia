@@ -99,6 +99,8 @@ $(document).ready(function() {
 
   var annotate = function(imageId) {
 
+    $("#main").fadeOut('fast');
+
     var json = {
       "imageId": imageId,
       "annotation": tags
@@ -108,10 +110,13 @@ $(document).ready(function() {
       url: "/api/annotations/tag/annotate",
       contentType: "application/json",
       method: "POST",
-      async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#main").fadeOut('fast');
+        getImage();
+        getTags();
+      },
+      error: function() {
+        toastr.error("An error occurred, previous image was not annotated.")
         getImage();
         getTags();
       }
@@ -119,6 +124,4 @@ $(document).ready(function() {
   };
 
   getImage();
-  getTags();
-
 });

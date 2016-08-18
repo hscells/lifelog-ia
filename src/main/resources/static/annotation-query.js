@@ -43,6 +43,8 @@ $(document).ready(function() {
   var annotate = function(imageId) {
     var annotation = $("#annotation").val();
 
+    $("#main").fadeOut('fast');
+
     var json = {
       "imageId": imageId,
       "annotation": annotation
@@ -52,10 +54,12 @@ $(document).ready(function() {
       url: "/api/annotations/query/annotate",
       contentType: "application/json",
       method: "POST",
-      async: false,
       data: JSON.stringify(json),
       success: function() {
-        $("#main").fadeOut('fast');
+        getImage();
+      },
+      error: function() {
+        toastr.error("An error occurred, previous image was not annotated.")
         getImage();
       }
     })

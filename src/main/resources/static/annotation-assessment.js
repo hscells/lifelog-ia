@@ -73,24 +73,25 @@ $(document).ready(function() {
       "conceptId": conceptId
     };
 
+    $("#main").fadeOut('fast');
+
     $("#" + conceptId).remove();
 
     $.ajax({
       url: "/api/annotations/assessment/annotate",
       contentType: "application/json",
       method: "POST",
-      async: false,
       data: JSON.stringify(json),
       success: function() {
         conceptsRemaining--;
         if (conceptsRemaining === 0) {
           conceptsRemaining = 1;
-          $("#main").fadeOut('fast');
           getImage();
         }
       },
       error: function() {
-        toastr.error("Error communicating with server!");
+        toastr.error("An error occurred, previous image was not annotated.")
+        getImage();
       }
     });
   };

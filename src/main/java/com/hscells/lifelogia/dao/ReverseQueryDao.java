@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 public interface ReverseQueryDao {
 
-    @SqlQuery("SELECT id, name, data FROM images WHERE id NOT IN (SELECT image_id FROM annotated_query_images) ORDER BY random() LIMIT 1")
+    @SqlQuery("SELECT id, name, data FROM images WHERE id IN (SELECT image_id FROM (SELECT i, image_id FROM (SELECT 1 i, image_id FROM annotated_text_images UNION (SELECT 0, id from images ORDER BY random())) as x WHERE image_id NOT IN (SELECT image_id FROM annotated_query_images) ORDER BY i DESC LIMIT 1) a) LIMIT 1")
     @Mapper(ImageMapper.class)
     Image getImage();
 

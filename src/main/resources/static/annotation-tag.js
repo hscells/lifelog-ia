@@ -89,7 +89,7 @@ $(document).ready(function() {
       tags.push(tag);
       // add an event listener to remove the tag once it's been added in the interface
       $(tagEl).appendTo($("#tags-" + imageId)).click(function() {
-        tags = _.without(tags, $(this).text());
+        tags = _.without(tags, $(this).text().trim());
         this.remove();
       });
     } else {

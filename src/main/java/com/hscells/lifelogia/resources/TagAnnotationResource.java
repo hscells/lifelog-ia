@@ -46,7 +46,7 @@ public class TagAnnotationResource {
     @POST
     @Path("/annotate")
     public Response annotate(@Auth Person person, TagAnnotation tagAnnotation) throws SQLException {
-        tagAnnotationService.annotate(tagAnnotation.getImageId(), person.getId(), tagAnnotation.getAnnotation());
+        tagAnnotationService.annotate(tagAnnotation.getImageId(), person.getId(), tagAnnotation.getAnnotation(), tagAnnotation.getStartTime());
         return Response.status(200).build();
     }
 

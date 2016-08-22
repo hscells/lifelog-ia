@@ -13,6 +13,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Harry Scells on 28/06/2016.
@@ -37,7 +39,7 @@ public class TextualAnnotationResource {
     @POST
     @Path("/annotate")
     public Response annotate(@Auth Person person, TextualAnnotation textualAnnotation) {
-        textualAnnotationService.annotate(textualAnnotation.getImageId(), person.getId(), textualAnnotation.getAnnotation());
+        textualAnnotationService.annotate(textualAnnotation.getImageId(), person.getId(), textualAnnotation.getAnnotation(), textualAnnotation.getStartTime());
         return Response.status(200).build();
     }
 

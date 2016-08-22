@@ -9,6 +9,7 @@ import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public interface AssessmentAnnotationDao {
     @Mapper(RelevanceConceptMapper.class)
     List<RelevanceConcept> getConceptsForImage(@Bind("imageId") int imageId);
 
-    @SqlUpdate("INSERT INTO annotated_assessment_images (image_id, person_id, annotation, relevance) VALUES (:imageId, :personId, :conceptId, :relevance)")
-    void annotate(@Bind("imageId") int imageId, @Bind("personId") int personId, @Bind("conceptId") int conceptId, @Bind("relevance") int relevance);
+    @SqlUpdate("INSERT INTO annotated_assessment_images (image_id, person_id, annotation, relevance, start_time, end_time) VALUES (:imageId, :personId, :conceptId, :relevance, :startTime, :endTime)")
+    void annotate(@Bind("imageId") int imageId, @Bind("personId") int personId, @Bind("conceptId") int conceptId, @Bind("relevance") int relevance, @Bind("startTime") Timestamp startTime, @Bind("endTime") Timestamp endTime);
 
 }

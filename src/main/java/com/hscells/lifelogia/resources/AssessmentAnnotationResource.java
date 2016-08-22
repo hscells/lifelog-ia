@@ -11,6 +11,8 @@ import javax.annotation.security.PermitAll;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -30,7 +32,9 @@ public class AssessmentAnnotationResource {
     @Path("/images")
     @Produces(MediaType.APPLICATION_JSON)
     public Image getImage() {
-        return assessmentAnnotationService.getImage();
+        Image image = assessmentAnnotationService.getImage();
+        image.setStartTime(new Timestamp(new Date().getTime()));
+        return image;
     }
 
     @GET
@@ -43,7 +47,8 @@ public class AssessmentAnnotationResource {
     @POST
     @Path("/annotate")
     public Response annotate(@Auth Person person, AssessmentAnnotation assessmentAnnotation) {
-        assessmentAnnotationService.annotate(new AssessmentAnnotation(assessmentAnnotation.getImageId(), person.getId(), assessmentAnnotation.getConceptId(), assessmentAnnotation.getRelevance()));
+        assessmentAnnotation.setPersonId(person.getId());
+        assessmentAnnotationService.annotate(assessmentAnnotation);
         return Response.status(200).build();
     }
 

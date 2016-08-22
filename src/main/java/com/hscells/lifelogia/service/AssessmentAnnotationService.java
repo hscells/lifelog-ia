@@ -5,6 +5,8 @@ import com.hscells.lifelogia.dao.AssessmentAnnotationDao;
 import com.hscells.lifelogia.model.AssessmentAnnotation;
 import com.hscells.lifelogia.model.Image;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -27,6 +29,6 @@ public class AssessmentAnnotationService {
     }
 
     public void annotate(AssessmentAnnotation assessmentAnnotation) {
-        assessmentAnnotationDao.annotate(assessmentAnnotation.getImageId(), assessmentAnnotation.getPersonId(), assessmentAnnotation.getConceptId(), assessmentAnnotation.getRelevance());
+        assessmentAnnotationDao.annotate(assessmentAnnotation.getImageId(), assessmentAnnotation.getPersonId(), assessmentAnnotation.getConceptId(), assessmentAnnotation.getRelevance(), assessmentAnnotation.getStartTime(), new Timestamp(new Date().getTime()));
     }
 }

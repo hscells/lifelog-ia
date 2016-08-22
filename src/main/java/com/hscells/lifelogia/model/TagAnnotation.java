@@ -1,5 +1,6 @@
 package com.hscells.lifelogia.model;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -10,6 +11,7 @@ public class TagAnnotation {
     private int imageId;
     private int personId;
     private List<String> annotation;
+    private Timestamp startTime;
 
     public TagAnnotation() {
     }
@@ -42,5 +44,13 @@ public class TagAnnotation {
 
     public void setAnnotation(List<String> annotation) {
         this.annotation = annotation;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 }

@@ -1,5 +1,7 @@
 package com.hscells.lifelogia.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Harry Scells on 28/06/2016.
  */
@@ -8,6 +10,7 @@ public class TextualAnnotation {
     private int imageId;
     private int personId;
     private String annotation;
+    private Timestamp startTime;
 
     public TextualAnnotation() {
     }
@@ -40,5 +43,13 @@ public class TextualAnnotation {
 
     public void setAnnotation(String annotation) {
         this.annotation = annotation;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 }

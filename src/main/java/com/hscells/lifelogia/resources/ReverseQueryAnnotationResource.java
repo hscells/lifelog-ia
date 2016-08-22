@@ -37,7 +37,7 @@ public class ReverseQueryAnnotationResource {
     @POST
     @Path("/annotate")
     public Response annotate(@Auth Person person, TextualAnnotation textualAnnotation) {
-        reverseQueryAnnotationService.annotate(textualAnnotation.getImageId(), person.getId(), textualAnnotation.getAnnotation());
+        reverseQueryAnnotationService.annotate(textualAnnotation.getImageId(), person.getId(), textualAnnotation.getAnnotation(), textualAnnotation.getStartTime());
         return Response.status(200).build();
     }
 

@@ -6,6 +6,8 @@ $(document).ready(function() {
   var conceptsRemaining = 0;
   var renderDeferred;
 
+  var startTime = 0;
+
   var getImage = function() {
     renderDeferred = $.Deferred();
     $.ajax({
@@ -40,6 +42,9 @@ $(document).ready(function() {
       resizedWindow = true;
     }
 
+    // set the start time
+    startTime = image["startTime"];
+
     // render the main item html
     $("#main").html(itemTemplate(image)).fadeIn('fast');
 
@@ -56,6 +61,8 @@ $(document).ready(function() {
     // the number of concepts remaining is unknown until this point
     conceptsRemaining = concepts.length;
 
+    console.log(conceptsRemaining);
+
     // add a listener to the assessment buttons that will annotate concepts -> image
     $(".assessment-button").click(function() {
       // ew gross this is such a hack
@@ -67,13 +74,15 @@ $(document).ready(function() {
   };
 
   var annotate = function(imageId, relevance, conceptId) {
+    console.log(conceptsRemaining);
+
+
     var json = {
       "imageId": imageId,
       "relevance": relevance,
-      "conceptId": conceptId
+      "conceptId": conceptId,
+      "startTime": startTime
     };
-
-    $("#main").fadeOut('fast');
 
     $("#" + conceptId).remove();
 
@@ -85,13 +94,12 @@ $(document).ready(function() {
       success: function() {
         conceptsRemaining--;
         if (conceptsRemaining === 0) {
-          conceptsRemaining = 1;
+          $("#main").fadeOut('fast');
           getImage();
         }
       },
       error: function() {
         toastr.error("An error occurred, previous image was not annotated.")
-        getImage();
       }
     });
   };

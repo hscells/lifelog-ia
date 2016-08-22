@@ -3,6 +3,8 @@ $(document).ready(function() {
   var template = _.template($("#item-template").text());
   var resizedWindow = false;
 
+  var startTime = 0;
+
   var getImage = function() {
     $.ajax({
       url: "/api/annotations/query/images",
@@ -29,6 +31,9 @@ $(document).ready(function() {
       annotate(image["id"]);
     });
 
+    // set the start time
+    startTime = image["startTime"];
+
 
     $("#annotation").keydown(function (e) {
       //noinspection JSUnresolvedVariable
@@ -47,7 +52,8 @@ $(document).ready(function() {
 
     var json = {
       "imageId": imageId,
-      "annotation": annotation
+      "annotation": annotation,
+      "startTime": startTime
     };
 
     $.ajax({

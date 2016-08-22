@@ -8,6 +8,7 @@ import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import java.sql.Array;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ public interface TagAnnotationDao {
     @SqlUpdate("INSERT INTO tags (value) VALUES (:tag)")
     void addTag(@Bind("tag") String tag);
 
-    @SqlUpdate("INSERT INTO annotated_tag_images (image_id, person_id, annotation) VALUES (:image_id, :person_id, :annotation)")
-    void annotateImage(@Bind("image_id") int imageId, @Bind("person_id") int personId, @Bind("annotation") Array annotation);
+    @SqlUpdate("INSERT INTO annotated_tag_images (image_id, person_id, annotation, start_time, end_time) VALUES (:image_id, :person_id, :annotation, :startTime, :endTime)")
+    void annotateImage(@Bind("image_id") int imageId, @Bind("person_id") int personId, @Bind("annotation") Array annotation, @Bind("startTime")Timestamp startTime, @Bind("endTime") Timestamp endTime);
 
 }

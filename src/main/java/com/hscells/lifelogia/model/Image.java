@@ -1,5 +1,7 @@
 package com.hscells.lifelogia.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Harry Scells on 17/12/2015.
  */
@@ -8,6 +10,7 @@ public class Image {
     private int id;
     private String data;
     private String name;
+    private Timestamp startTime;
 
     public Image(){}
 
@@ -40,5 +43,13 @@ public class Image {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 }

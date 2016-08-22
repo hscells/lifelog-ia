@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   var template = _.template($("#item-template").text());
   var resizedWindow = false;
+  var startTime = 0;
 
   var getImage = function() {
     $.ajax({
@@ -20,6 +21,9 @@ $(document).ready(function() {
       $("#lifelog-app").height($(document).height());
       resizedWindow = true;
     }
+
+    // set the start time
+    startTime = image["startTime"];
 
     // render the item in the interface
     $("#main").html(template(image)).fadeIn('fast');
@@ -41,7 +45,8 @@ $(document).ready(function() {
 
     var json = {
       "imageId": imageId,
-      "annotation": annotation
+      "annotation": annotation,
+      "startTime": startTime
     };
 
     $.ajax({

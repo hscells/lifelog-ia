@@ -8,6 +8,8 @@ $(document).ready(function() {
   var imageId;
   var renderDeferred;
 
+  var startTime = 0;
+
   var getImage = function() {
     renderDeferred = $.Deferred();
     $.ajax({
@@ -44,6 +46,9 @@ $(document).ready(function() {
 
     // this empties the list of tags
     tags = [];
+
+    // set the start time
+    startTime = image["startTime"];
 
     imageId = image["id"];
     $("#main").html(template(image)).fadeIn('fast');
@@ -103,7 +108,8 @@ $(document).ready(function() {
 
     var json = {
       "imageId": imageId,
-      "annotation": tags
+      "annotation": tags,
+      "startTime": startTime
     };
 
     $.ajax({

@@ -1,5 +1,7 @@
 package com.hscells.lifelogia.model;
 
+import java.sql.Timestamp;
+
 /**
  * Created by Harry Scells on 1/08/2016.
  */
@@ -9,6 +11,7 @@ public class AssessmentAnnotation {
     private int personId;
     private int conceptId;
     private int relevance;
+    private Timestamp startTime;
 
     public AssessmentAnnotation() {
     }
@@ -50,5 +53,13 @@ public class AssessmentAnnotation {
 
     public void setRelevance(int relevance) {
         this.relevance = relevance;
+    }
+
+    public Timestamp getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Timestamp startTime) {
+        this.startTime = startTime;
     }
 }

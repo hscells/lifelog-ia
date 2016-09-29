@@ -1,9 +1,9 @@
 package com.hscells.lifelogia.dao;
 
-import com.hscells.lifelogia.model.RelevanceConcept;
 import com.hscells.lifelogia.mapper.ImageMapper;
 import com.hscells.lifelogia.mapper.RelevanceConceptMapper;
 import com.hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.model.RelevanceConcept;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.SqlUpdate;

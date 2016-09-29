@@ -21,9 +21,25 @@ DROP TABLE IF EXISTS
   annotated_tag_images,
   assessment_concepts,
   annotated_assessment_images,
-  annotated_query_images
+  annotated_query_images,
+  images_topics,
+  topics
 CASCADE;
 
+CREATE TABLE topics (
+  id SERIAL PRIMARY KEY,
+  topic_id TEXT NOT NULL UNIQUE,
+  title TEXT NOT NULL,
+  description TEXT NOT NULL,
+  narrative TEXT NOT NULL
+);
+
+CREATE TABLE images_topics (
+  id SERIAL PRIMARY KEY,
+  image_id TEXT NOT NULL,
+  topic_id TEXT NOT NULL,
+  FOREIGN KEY (topic_id) REFERENCES topics (topic_id)
+);
 
 -- when images get annotated, they are added to these tables
 

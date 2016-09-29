@@ -22,6 +22,8 @@ public interface PersonDao {
     @Mapper(PersonMapper.class)
     Person getPersonByAlias(@Bind("alias") String alias);
 
+    @SqlUpdate("UPDATE people SET password=:password WHERE email=:email")
+    void resetPassword(@Bind("password") String password, @Bind("email") String email);
 
 
 }

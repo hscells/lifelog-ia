@@ -1,9 +1,9 @@
 package com.hscells.lifelogia.service;
 
-import com.hscells.lifelogia.model.RelevanceConcept;
 import com.hscells.lifelogia.dao.AssessmentAnnotationDao;
 import com.hscells.lifelogia.model.AssessmentAnnotation;
 import com.hscells.lifelogia.model.Image;
+import com.hscells.lifelogia.model.RelevanceConcept;
 
 import java.sql.Timestamp;
 import java.util.Date;

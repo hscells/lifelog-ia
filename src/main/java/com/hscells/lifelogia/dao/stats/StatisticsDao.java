@@ -2,7 +2,6 @@ package com.hscells.lifelogia.dao.stats;
 
 import com.hscells.lifelogia.mapper.stats.AnnotationStatisticsMapper;
 import com.hscells.lifelogia.model.stats.AnnotationStatistics;
-import com.hscells.lifelogia.model.stats.Statistic;
 import org.skife.jdbi.v2.sqlobject.Bind;
 import org.skife.jdbi.v2.sqlobject.SqlQuery;
 import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
@@ -24,7 +23,7 @@ public interface StatisticsDao {
     @Mapper(AnnotationStatisticsMapper.class)
     AnnotationStatistics getQueryStatisticsForPerson(@Bind("personId") int personId);
 
-    @SqlQuery("SELECT count(*), avg(end_time - start_time), sum(end_time - start_time) FROM annotated_assessment_images WHERE person_id = :personId")
+    @SqlQuery("SELECT count(DISTINCT image_id), avg(end_time - start_time), 0 sum FROM annotated_assessment_images WHERE person_id = :personId")
     @Mapper(AnnotationStatisticsMapper.class)
     AnnotationStatistics getAssessmentStatisticsForPerson(@Bind("personId") int personId);
 

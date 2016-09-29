@@ -1,9 +1,9 @@
 package com.hscells.lifelogia.resources;
 
-import com.hscells.lifelogia.service.TextualAnnotationService;
 import com.hscells.lifelogia.model.Image;
 import com.hscells.lifelogia.model.Person;
 import com.hscells.lifelogia.model.TextualAnnotation;
+import com.hscells.lifelogia.service.TextualAnnotationService;
 import io.dropwizard.auth.Auth;
 
 import javax.annotation.security.PermitAll;
@@ -13,8 +13,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.sql.Timestamp;
-import java.util.Date;
 
 /**
  * Created by Harry Scells on 28/06/2016.

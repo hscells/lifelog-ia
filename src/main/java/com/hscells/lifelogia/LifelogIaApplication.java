@@ -1,15 +1,14 @@
 package com.hscells.lifelogia;
 
 import com.github.dirkraft.dropwizard.fileassets.FileAssetsBundle;
+import com.hscells.lifelogia.auth.PersonAuthenticator;
 import com.hscells.lifelogia.auth.PersonAuthoriser;
 import com.hscells.lifelogia.dao.*;
 import com.hscells.lifelogia.dao.stats.StatisticsDao;
+import com.hscells.lifelogia.model.Person;
 import com.hscells.lifelogia.resources.*;
 import com.hscells.lifelogia.service.*;
-import com.hscells.lifelogia.auth.PersonAuthenticator;
-import com.hscells.lifelogia.model.Person;
 import com.hscells.lifelogia.service.stats.StatisticsService;
-import com.hscells.lifelogia.views.StatisticsView;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -41,6 +40,7 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final ReverseQueryDao reverseQueryDao = jdbi.onDemand(ReverseQueryDao.class);
         final PersonDao personDao = jdbi.onDemand(PersonDao.class);
         final StatisticsDao statisticsDao = jdbi.onDemand(StatisticsDao.class);
+        final TopicDao topicDao = jdbi.onDemand(TopicDao.class);
 
         final PersonService personService = new PersonService(personDao);
         final TextualAnnotationService textualAnnotationService = new TextualAnnotationService(textualAnnotationDao);
@@ -48,6 +48,8 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         final AssessmentAnnotationService assessmentAnnotationService = new AssessmentAnnotationService(assessmentAnnotationDao);
         final ReverseQueryAnnotationService reverseQueryAnnotationService = new ReverseQueryAnnotationService(reverseQueryDao);
         final StatisticsService statisticsService = new StatisticsService(statisticsDao);
+        final TopicService topicService = new TopicService(topicDao);
+        final RecoveryService recoveryService = new RecoveryService();
 
         PersonAuthenticator personAuthenticator = new PersonAuthenticator(personService);
 
@@ -55,8 +57,9 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
         environment.jersey().register(new TagAnnotationResource(tagAnnotationService));
         environment.jersey().register(new AssessmentAnnotationResource(assessmentAnnotationService));
         environment.jersey().register(new ReverseQueryAnnotationResource(reverseQueryAnnotationService));
-        environment.jersey().register(new PersonResource(personService));
+        environment.jersey().register(new PersonResource(personService, recoveryService));
         environment.jersey().register(new StatisticsResource(statisticsService));
+        environment.jersey().register(new TopicResource(topicService));
         environment.jersey().register(new ViewResource());
 
         CachingAuthenticator<BasicCredentials, Person> cachingAuthenticator = new CachingAuthenticator<>(
@@ -86,8 +89,8 @@ public class LifelogIaApplication extends Application<LifelogIaConfiguration> {
 
     @Override
     public void initialize(Bootstrap<LifelogIaConfiguration> bootstrap) {
-        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
-//        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/static", "/static", "*"));
+//        bootstrap.addBundle(new AssetsBundle("/static", "/static", "*"));
+        bootstrap.addBundle(new FileAssetsBundle("src/main/resources/static", "/static", "*"));
         bootstrap.addBundle(new ViewBundle<>());
     }
 

@@ -41,6 +41,7 @@
 
             <div id="lifelog-app">
 
+                <section id="topic"></section>
                 <section id="main">
                     <strong id="session-annotated"></strong>
                     <div id="lifelog-image-list"></div>
@@ -90,6 +91,14 @@
                     <button type="button" class="btn btn-default assessment-button" id="9-<%- id %>">9</button>
                     <button type="button" class="btn btn-default assessment-button" id="10-<%- id %>">10</button>
                 </div>
+            </div>
+        </script>
+
+        <script type="text/template" id="topic-template">
+            <div class="alert alert-info">
+                <%- topicId %> - <%- title %>
+                <p><%- description %></p>
+                <p><%- narrative %></p>
             </div>
         </script>
     </body>

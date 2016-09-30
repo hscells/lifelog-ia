@@ -1,9 +1,27 @@
 $(document).ready(function() {
 
   var template = _.template($("#item-template").text());
+  var topicTemplate = _.template($("#topic-template").text());
   var resizedWindow = false;
 
   var startTime = 0;
+
+  var getTopic = function (imageId) {
+    $.ajax({
+      url: "/api/topics/" + imageId,
+      dataType: "json",
+      method: "GET",
+      success: function(data) {
+        renderTopic(data)
+      }
+    })
+  };
+
+  var renderTopic = function (topic) {
+    if (topic != undefined) {
+      $("#topic").html(topicTemplate(topic)).fadeIn('fast')
+    }
+  };
 
   var getImage = function() {
     $.ajax({
@@ -17,6 +35,9 @@ $(document).ready(function() {
   };
 
   var renderImages = function(image) {
+
+    getTopic(image['name']);
+
     // resize the size of the screen so annotators don't have to scroll
     if (!resizedWindow) {
       $("#lifelog-app").height($(document).height());
@@ -49,6 +70,7 @@ $(document).ready(function() {
     var annotation = $("#annotation").val();
 
     $("#main").fadeOut('fast');
+    $("#topic").fadeOut('fast');
 
     var json = {
       "imageId": imageId,

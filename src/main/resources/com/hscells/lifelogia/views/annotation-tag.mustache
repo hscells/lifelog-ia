@@ -41,6 +41,7 @@
 
             <div id="lifelog-app">
 
+                <section id="topic"></section>
                 <section id="main">
                     <strong id="session-annotated"></strong>
                     <div id="lifelog-image-list"></div>
@@ -94,6 +95,14 @@
             <span class="label label-info tag">
                 <%- name %>
             </span>
+        </script>
+
+        <script type="text/template" id="topic-template">
+            <div class="alert alert-info">
+                <%- topicId %> - <%- title %>
+                <p><%- description %></p>
+                <p><%- narrative %></p>
+            </div>
         </script>
     </body>
 </html>

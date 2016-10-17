@@ -82,6 +82,8 @@ $(document).ready(function() {
   };
 
   var renderConcepts = function(imageId, concepts) {
+    unannotatedConcepts = [];
+    annotatedConcepts = [];
     // render the concepts
     for (var i = 0; i < concepts.length; i++) {
       var concept = concepts[i];
@@ -110,6 +112,8 @@ $(document).ready(function() {
 
     $(".next").click(function() {
       $("#main").fadeOut('fast');
+      $("#topic").fadeOut('fast');
+      getImage();
       var k = 0;
       for (var i = 0; i < unannotatedConcepts.length; i++) {
         var concept = unannotatedConcepts[i];
@@ -138,12 +142,7 @@ $(document).ready(function() {
       method: "POST",
       data: JSON.stringify(json),
       success: function() {
-        conceptsRemaining--;
-        if (conceptsRemaining === 0) {
-          $("#main").fadeOut('fast');
-          $("#topic").fadeOut('fast');
-          getImage();
-        }
+
       },
       error: function() {
         toastr.error("An error occurred, previous image was not annotated.")

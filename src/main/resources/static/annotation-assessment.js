@@ -1,11 +1,19 @@
 $(document).ready(function() {
 
+  var Concept = function(conceptId, imageId) {
+    this.conceptId = conceptId;
+    this.imageId = imageId;
+  };
+
   var itemTemplate = _.template($("#item-template").text());
   var assessmentTemplate = _.template($("#assessment-template").text());
   var topicTemplate = _.template($("#topic-template").text());
+  var conceptTemplate = _.template($("#concept-button").text());
   var resizedWindow = false;
   var conceptsRemaining = 0;
   var renderDeferred;
+  var unannotatedConcepts = [];
+  var annotatedConcepts = [];
 
   var startTime = 0;
 
@@ -76,28 +84,44 @@ $(document).ready(function() {
   var renderConcepts = function(imageId, concepts) {
     // render the concepts
     for (var i = 0; i < concepts.length; i++) {
-      $("#assessments").append(assessmentTemplate(concepts[i])).hide().slideDown();
+      var concept = concepts[i];
+      unannotatedConcepts.push(new Concept(concept['id'], imageId));
+      var conceptButton = $(conceptTemplate(concept));
+      $(conceptButton).click({concept: concept}, function(event){
+        $("#assessments").append(assessmentTemplate(event.data.concept));
+        // add a listener to the assessment buttons that will annotate concepts -> image
+        var assessmentButton = $(".assessment-button");
+        assessmentButton.off();
+        assessmentButton.click(function() {
+          // ew gross this is such a hack
+          var assessmentIdEl = $(this)[0];
+          var relevance = assessmentIdEl.id.split("-")[0];
+          var conceptId = assessmentIdEl.id.split("-")[1];
+          annotate(imageId, relevance, conceptId);
+          annotatedConcepts.push(parseInt(conceptId));
+        });
+        $(this).remove()
+      });
+      $("#available-concepts").append(conceptButton).hide().slideDown();
     }
 
     // the number of concepts remaining is unknown until this point
     conceptsRemaining = concepts.length;
 
-    console.log(conceptsRemaining);
-
-    // add a listener to the assessment buttons that will annotate concepts -> image
-    $(".assessment-button").click(function() {
-      // ew gross this is such a hack
-      var assessmentIdEl = $(this)[0];
-      var relevance = assessmentIdEl.id.split("-")[0];
-      var conceptId = assessmentIdEl.id.split("-")[1];
-      annotate(imageId, relevance, conceptId);
+    $(".next").click(function() {
+      var k = 0;
+      for (var i = 0; i < unannotatedConcepts.length; i++) {
+        var concept = unannotatedConcepts[i];
+        if (annotatedConcepts.indexOf(concept.conceptId) < 0) {
+          annotate(concept.imageId, 0, concept.conceptId);
+          k++;
+        }
+      }
     });
+
   };
 
   var annotate = function(imageId, relevance, conceptId) {
-    console.log(conceptsRemaining);
-
-
     var json = {
       "imageId": imageId,
       "relevance": relevance,

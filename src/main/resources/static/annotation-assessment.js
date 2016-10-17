@@ -109,6 +109,7 @@ $(document).ready(function() {
     conceptsRemaining = concepts.length;
 
     $(".next").click(function() {
+      $("#main").fadeOut('fast');
       var k = 0;
       for (var i = 0; i < unannotatedConcepts.length; i++) {
         var concept = unannotatedConcepts[i];

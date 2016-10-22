@@ -9,6 +9,7 @@ $(document).ready(function() {
   var assessmentTemplate = _.template($("#assessment-template").text());
   var topicTemplate = _.template($("#topic-template").text());
   var conceptTemplate = _.template($("#concept-button").text());
+  var indexTemplate = _.template($("#concept-index").text());
   var resizedWindow = false;
   var conceptsRemaining = 0;
   var renderDeferred;
@@ -88,6 +89,7 @@ $(document).ready(function() {
   var renderConcepts = function(imageId, concepts) {
     unannotatedConcepts = [];
     annotatedConcepts = [];
+    var index = "";
     // render the concepts
     for (var i = 0; i < concepts.length; i++) {
       var concept = concepts[i];
@@ -106,8 +108,13 @@ $(document).ready(function() {
           annotate(imageId, relevance, conceptId);
           annotatedConcepts.push(parseInt(conceptId));
         });
-        $(this).remove()
+        $(this).remove();
       });
+      var tmpIndex = concept['value'][0];
+      if (tmpIndex != index) {
+        index = tmpIndex;
+        $("#available-concepts").append($(indexTemplate({value: tmpIndex})));
+      }
       $("#available-concepts").append(conceptButton).hide().slideDown();
     }
 

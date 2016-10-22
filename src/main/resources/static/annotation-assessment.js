@@ -14,7 +14,7 @@ $(document).ready(function() {
   var renderDeferred;
   var unannotatedConcepts = [];
   var annotatedConcepts = [];
-  var concepts = [];
+  var concept_data = undefined;
 
   var startTime = 0;
 
@@ -44,30 +44,30 @@ $(document).ready(function() {
       success: function(data) {
         renderImage(data);
         $.when(renderDeferred).done(function(image) {
-          getConcepts(image["id"])
+          getConcepts(image["id"]);
+          getTopic(image["name"]);
         });
       }
     })
   };
 
   var getConcepts = function(imageId) {
-    if (concepts.length == 0) {
+    if (concept_data === undefined) {
       $.ajax({
         url: "/api/annotations/assessment/concepts/" + imageId,
         dataType: "json",
         method: "GET",
         success: function(data) {
-          concepts = data;
+          concept_data = data;
           renderConcepts(imageId, data);
         }
       });
+    } else {
+      renderConcepts(imageId, concept_data);
     }
-    renderConcepts(imageId, concepts);
   };
 
   var renderImage = function(image) {
-
-    getTopic(image['name']);
 
     // resize the size of the screen so annotators don't have to scroll
     if (!resizedWindow) {

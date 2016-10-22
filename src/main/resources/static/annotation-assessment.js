@@ -14,6 +14,7 @@ $(document).ready(function() {
   var renderDeferred;
   var unannotatedConcepts = [];
   var annotatedConcepts = [];
+  var concepts = [];
 
   var startTime = 0;
 
@@ -50,15 +51,18 @@ $(document).ready(function() {
   };
 
   var getConcepts = function(imageId) {
-    var concepts = [];
-    $.ajax({
-      url: "/api/annotations/assessment/concepts/" + imageId,
-      dataType: "json",
-      method: "GET",
-      success: function(data) {
-       renderConcepts(imageId, data);
-      }
-    });
+    if (concepts.length == 0) {
+      $.ajax({
+        url: "/api/annotations/assessment/concepts/" + imageId,
+        dataType: "json",
+        method: "GET",
+        success: function(data) {
+          concepts = data;
+          renderConcepts(imageId, data);
+        }
+      });
+    }
+    renderConcepts(imageId, concepts);
   };
 
   var renderImage = function(image) {

@@ -22,7 +22,7 @@ public interface AssessmentAnnotationDao {
     @Mapper(ImageMapper.class)
     Image getImage();
 
-    @SqlQuery("SELECT DISTINCT concepts.id, concepts.value FROM assessment_concepts concepts JOIN annotated_assessment_images ON concepts.id NOT IN (SELECT annotation FROM annotated_assessment_images WHERE image_id = :imageId);")
+    @SqlQuery("SELECT DISTINCT concepts.id, concepts.value FROM assessment_concepts concepts JOIN annotated_assessment_images ON concepts.id NOT IN (SELECT annotation FROM annotated_assessment_images WHERE image_id = :imageId) ORDER BY value;")
     @Mapper(RelevanceConceptMapper.class)
     List<RelevanceConcept> getConceptsForImage(@Bind("imageId") int imageId);
 

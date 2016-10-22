@@ -18,6 +18,11 @@
         <link href="/static/pace.css" rel="stylesheet">
         <link href="/static/custom.css" rel="stylesheet">
 
+        <style>
+            .concept {
+                width: 96px;
+            }
+        </style>
     </head>
 
     <body>
@@ -58,7 +63,7 @@
         <script src="/static/annotation-assessment.js" type="text/javascript"></script>
 
         <script type="text/template" id="concept-button">
-            <button type="button" class="btn btn-default"><%- value %></button>
+            <button type="button" class="btn btn-default concept"><%- value %></button>
         </script>
 
         <script type="text/template" id="item-template">
